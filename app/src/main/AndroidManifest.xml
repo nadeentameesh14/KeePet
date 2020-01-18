@@ -7,7 +7,7 @@
         android:allowBackup="true"
         android:icon="@drawable/logo"
         android:label="KeePet"
-        android:roundIcon="@drawable/logo"
+        android:roundIcon="@drawable/round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
