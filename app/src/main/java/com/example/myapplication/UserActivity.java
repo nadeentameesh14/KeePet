@@ -9,14 +9,21 @@ import android.view.MenuItem;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class SettingsActivity extends AppCompatActivity {
+public class UserActivity extends AppCompatActivity {
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_settings);
+        setContentView(R.layout.activity_user);
 
-        BottomNavigationView bottomNavigationView = (BottomNavigationView)findViewById(R.id.bottom_navigation);
+        bottomNav();
+    }
+
+    public void bottomNav() {
+
+        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
 
         bottomNavigationView.setSelectedItemId(R.id.nav_settings);
 
@@ -26,16 +33,16 @@ public class SettingsActivity extends AppCompatActivity {
 
                 switch (item.getItemId()) {
                     case R.id.nav_add: {
-                        startActivity(new Intent(getApplicationContext(),AddActivity.class));
-                        overridePendingTransition(0,0);
+                        startActivity(new Intent(getApplicationContext(), AddActivity.class));
+                        overridePendingTransition(0, 0);
                         return true;
                     }
                     case R.id.nav_settings: {
                         return true;
                     }
                     case R.id.nav_home: {
-                        startActivity(new Intent(getApplicationContext(),MainActivity.class));
-                        overridePendingTransition(0,0);
+                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                        overridePendingTransition(0, 0);
                         return true;
                     }
 
@@ -43,5 +50,8 @@ public class SettingsActivity extends AppCompatActivity {
                 return false;
             }
         });
+
     }
+
+
 }

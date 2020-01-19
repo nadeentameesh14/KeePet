@@ -2,7 +2,6 @@ package com.example.myapplication;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 
 import android.content.Context;
 import android.content.Intent;
@@ -38,14 +37,6 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-   // ListView feed;
-
-   // JSONArray pets;
-
-   // int mImages[];
-
-   // String mBreeds[], mGenders[], mAges[];
-
     private ArrayList<String> al;
 
     private ArrayAdapter<String> arrayAdapter;
@@ -56,8 +47,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        //feed = (ListView) findViewById(R.id.listView);
 
         al = new ArrayList<>();
 
@@ -161,51 +150,6 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
-
-        BottomNavigationView bottomNavigationView = (BottomNavigationView)findViewById(R.id.bottom_navigation);
-
-        bottomNavigationView.setSelectedItemId(R.id.nav_home);
-
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
-                switch (item.getItemId()) {
-                    case R.id.nav_add: {
-                        startActivity(new Intent(getApplicationContext(),AddActivity.class));
-                        overridePendingTransition(0,0);
-                        return true;
-                    }
-                    case R.id.nav_settings: {
-                        startActivity(new Intent(getApplicationContext(),SettingsActivity.class));
-                        overridePendingTransition(0,0);
-                        return true;
-                    }
-                    case R.id.nav_home: {
-                        return true;
-                    }
-
-                }
-                return false;
-            }
-        });
-
-
     }
-
-  /*  class myAdapter extends ArrayAdapter<String> {
-
-        Context context;
-        int rImg[];
-        String rBreeds[], rGenders[], rAges[];
-
-
-        myAdapter( Context c, int imgs[], String breeds[], String genders[], String ages[]) {
-            super(c, R.layout.post, R.id.imageView);
-
-        }
-    }*/
-
 
 }
