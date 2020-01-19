@@ -3,4 +3,7 @@
     <string name="home">Home</string>
     <string name="add_post">Add Post</string>
     <string name="settings">Settings</string>
+    <string name="viewbreed">viewbreed</string>
+    <string name="viewgender">viewgender</string>
+    <string name="viewage">viewage</string>
 </resources>
