@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.net.wifi.p2p.WifiP2pManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -36,6 +37,9 @@ public class AddActivity extends AppCompatActivity {
     private Spinner breedSpin;
     private Spinner genderSpin;
     private Switch vacSwitch;
+    private EditText name;
+    private EditText age;
+
     private EditText description;
     private ImageButton postButton;
 
@@ -50,6 +54,8 @@ public class AddActivity extends AppCompatActivity {
 
         initialize();
 
+        spinners();
+
         postButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -58,7 +64,6 @@ public class AddActivity extends AppCompatActivity {
             }
         });
 
-        spinners();
 
         bottomNav();
 
@@ -73,6 +78,8 @@ public class AddActivity extends AppCompatActivity {
         vacSwitch = (Switch)findViewById(R.id.vaccinated);
         description = (EditText)findViewById(R.id.description_edit);
         postButton = (ImageButton)findViewById(R.id.postButton);
+        name = (EditText)findViewById(R.id.nameEdit);
+        age = (EditText)findViewById(R.id.dateEdit);
 
     }
 
@@ -172,8 +179,8 @@ public class AddActivity extends AppCompatActivity {
 
     public void sendPostRequest() {
 
-        String URL_BASE = "";
-        String URL= URL_BASE + "";
+        String URL_BASE = "http://61bd8f5f.ngrok.io";
+        String URL= URL_BASE + "/pet/create";
 
         final RequestQueue requestQueue = Volley.newRequestQueue(AddActivity.this);
 
@@ -181,24 +188,35 @@ public class AddActivity extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                            Toast.makeText(AddActivity.this,response,Toast.LENGTH_LONG).show();
+                            Toast.makeText(AddActivity.this,"Posted Successfully! ",Toast.LENGTH_LONG).show();
+                            Log.d("Response", response);
+                            startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                            overridePendingTransition(0,0);
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Toast.makeText(AddActivity.this,error.toString(),Toast.LENGTH_LONG).show();
+                        Log.d("Error:",error.toString());
                     }
                 }){
             @Override
             protected Map<String,String> getParams(){
                 Map<String,String> params = new HashMap<String, String>();
-                params.put("Type",typeSpin.getSelectedItem().toString());
-                params.put("Breed",breedSpin.getSelectedItem().toString());
-                params.put("Gender",genderSpin.getSelectedItem().toString());
-                if(vacSwitch.isChecked()) params.put("Vaccination",String.valueOf(1));
-                else params.put("Vaccination",String.valueOf(0));
-                params.put("Description",description.toString());
+                //name,age,breed,type,gender,vaccination,description
+                params.put("name",name.getText().toString());
+                params.put("age",age.getText().toString());
+                params.put("type",typeSpin.getSelectedItem().toString());
+                params.put("breed",breedSpin.getSelectedItem().toString());
+
+                if(genderSpin.getSelectedItem().toString().equals("Male")) params.put("gender",String.valueOf('m'));
+                else params.put("gender",String.valueOf('f'));
+
+                if(vacSwitch.isChecked()) params.put("vaccination",String.valueOf(1));
+                else params.put("vaccination",String.valueOf(0));
+
+                params.put("description",description.getText().toString());
 
                 return params;
             }
@@ -209,5 +227,6 @@ public class AddActivity extends AppCompatActivity {
 
 
     }
+
 
 }
