@@ -2,7 +2,6 @@ package com.example.myapplication;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -40,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
                         return true;
                     }
                     case R.id.nav_settings: {
-                        startActivity(new Intent(getApplicationContext(),SettingsActivity.class));
+                        startActivity(new Intent(getApplicationContext(), UserActivity.class));
                         overridePendingTransition(0,0);
                         return true;
                     }

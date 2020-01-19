@@ -65,7 +65,7 @@ public class PetViewActivity extends AppCompatActivity {
                         return true;
                     }
                     case R.id.nav_settings: {
-                        startActivity(new Intent(getApplicationContext(),SettingsActivity.class));
+                        startActivity(new Intent(getApplicationContext(), UserActivity.class));
                         overridePendingTransition(0,0);
                         return true;
                     }
@@ -85,7 +85,7 @@ public class PetViewActivity extends AppCompatActivity {
     public void getPetRequest() {
 
         String URL_BASE = "http://61bd8f5f.ngrok.io";
-        String URL = URL_BASE + "/pet/get?id=2";
+        String URL = URL_BASE + "/pet/get?id=" + ID;
 
         final RequestQueue requestQueue = Volley.newRequestQueue(PetViewActivity.this);
 
@@ -102,11 +102,26 @@ public class PetViewActivity extends AppCompatActivity {
                             try {
                                 JSONObject item = response.getJSONObject(i);
                                 Type = item.getString("type");
+                                Breed = item.getString("breed");
 
-                                petInfo.setText("Type: " + Type);
+                                if(item.getString("gender").equals("m")) Gender = "Male";
+                                else Gender = "Female";
+
+                                Name = item.getString("name");
+                                Age = item.getString("age");
+
+                                if(item.getInt("vaccination") == 0) Vac = "No";
+                                else Vac = "Yes";
+
+                                Desc = item.getString("description");
+
+                                String pet_i= "Name: " + Name + "\nBirthdate: " + Age + "\nType: " + Type + "\nBreed" + Breed + "\nGender: " + Gender
+                                        + "\nVaccinated: " + Vac + "\nDescription: " + Desc;
+
+                                petInfo.setText(pet_i);
 
                             } catch (JSONException e) {
-                                Log.e("MYAPP", "unexpected JSON exception in request 1", e);
+                                Log.e("Exception", "unexpected JSON exception in request 1", e);
                             }
                         }
                     }

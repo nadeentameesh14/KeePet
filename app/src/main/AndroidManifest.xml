@@ -7,15 +7,15 @@
 
     <application
         android:allowBackup="true"
-        android:usesCleartextTraffic="true"
         android:icon="@drawable/logo"
         android:label="KeePet"
         android:roundIcon="@drawable/round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".PetViewActivity"></activity>
-        <activity android:name=".SettingsActivity" />
+        <activity android:name=".PetViewActivity" />
+        <activity android:name=".UserActivity" />
         <activity android:name=".AddActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
