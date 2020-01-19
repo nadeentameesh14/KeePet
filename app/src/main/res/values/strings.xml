@@ -10,6 +10,7 @@
     <string name="breed">Breed</string>
     <string name="gender">Gender</string>
     <string name="vaccinated">Vaccinated</string>
+    <string name="description">Description</string>
 
 
     <string-array name="pet_types">
