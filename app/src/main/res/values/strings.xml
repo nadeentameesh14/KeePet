@@ -11,6 +11,9 @@
     <string name="gender">Gender</string>
     <string name="vaccinated">Vaccinated</string>
     <string name="description">Description</string>
+    <string name="pet_view">Pet View</string>
+    <string name="call">Call</string>
+    <string name="message">Message</string>
 
 
     <string-array name="pet_types">

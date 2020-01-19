@@ -4,18 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddActivity">
+    tools:context=".PetViewActivity">
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent" android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/add_title"
+            android:id="@+id/view_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="16dp"
-            android:text="@string/add_new_post"
+            android:text="@string/pet_view"
             android:textSize="30sp"
             android:textStyle="bold"
             android:textColor="#000000"
@@ -28,7 +28,7 @@
 
 
         <ImageView
-            android:id="@+id/imageUpload"
+            android:id="@+id/image"
             android:layout_width="235dp"
             android:layout_height="154dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -42,7 +42,7 @@
             />
 
         <ImageButton
-            android:id="@+id/uploadButton"
+            android:id="@+id/callButton"
             android:layout_width="55dp"
             android:layout_height="34dp"
             android:background="@drawable/round_button"
@@ -52,7 +52,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.381"
-            app:srcCompat="@android:drawable/ic_menu_upload" />
+            app:srcCompat="@android:drawable/ic_menu_call" />
 
         <ImageButton
             android:id="@+id/postButton"
@@ -80,7 +80,7 @@
             app:layout_constraintVertical_bias="0.9" />
 
         <ImageButton
-            android:id="@+id/resetButton"
+            android:id="@+id/messageButton"
             android:layout_width="55dp"
             android:layout_height="34dp"
             android:background="@drawable/round_button"
@@ -90,13 +90,13 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.381"
-            app:srcCompat="@android:drawable/ic_menu_close_clear_cancel" />
+            app:srcCompat="@android:drawable/ic_dialog_email" />
 
         <TextView
-            android:id="@+id/upload"
+            android:id="@+id/call"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/upload"
+            android:text="@string/call"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.34"
@@ -104,18 +104,18 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.421" />
 
+
         <TextView
-            android:id="@+id/reset"
+            android:id="@+id/message"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/reset"
+            android:text="@string/message"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.648"
+            app:layout_constraintHorizontal_bias="0.668"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.421" />
-
 
         <EditText
             android:id="@+id/description_edit"
@@ -145,16 +145,6 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.476" />
 
-        <Spinner
-            android:id="@+id/type_spinner"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.03"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/add_title"
-            app:layout_constraintVertical_bias="0.526" />
 
         <TextView
             android:id="@+id/breed"
@@ -170,16 +160,6 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.476" />
 
-        <Spinner
-            android:id="@+id/breed_spinner"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.931"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/add_title"
-            app:layout_constraintVertical_bias="0.526" />
 
         <TextView
             android:id="@+id/gender"
@@ -209,32 +189,10 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.685" />
 
-        <Spinner
-            android:id="@+id/gender_spinner"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.03"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/add_title"
-            app:layout_constraintVertical_bias="0.626" />
-
-        <Switch
-            android:id="@+id/vaccinated"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/vaccinated"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.876"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.625" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 
 
@@ -247,10 +205,6 @@
         app:itemTextColor="@drawable/selector"
         app:itemIconTint="@drawable/selector"
         app:menu="@menu/bottom_nav"
-
-
-
         />
-
 
 </RelativeLayout>
