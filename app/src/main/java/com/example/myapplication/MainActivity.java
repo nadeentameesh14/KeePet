@@ -50,21 +50,7 @@ public class MainActivity extends AppCompatActivity {
 
         al = new ArrayList<>();
 
-        al.add("php");
-
-        al.add("c");
-
-        al.add("python");
-
-        al.add("java");
-
-        al.add("html");
-
-        al.add("c++");
-
-        al.add("css");
-
-        al.add("javascript");
+       
 
         ImageView img = (ImageView) findViewById(R.id.imageView3);
 
