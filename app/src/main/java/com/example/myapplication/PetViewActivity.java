@@ -41,6 +41,10 @@ public class PetViewActivity extends AppCompatActivity {
 
         petInfo=(TextView)findViewById(R.id.petInfo) ;
 
+        Intent intent = getIntent();
+
+        ID = intent.getIntExtra("ID",0);
+
         getPetRequest();
 
         bottomNav();
