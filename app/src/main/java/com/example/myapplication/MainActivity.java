@@ -148,8 +148,39 @@ public class MainActivity extends AppCompatActivity {
 
         });
 
+        bottomNav();
 
+    }
 
+    public void bottomNav() {
+
+        BottomNavigationView bottomNavigationView = (BottomNavigationView)findViewById(R.id.bottom_navigation);
+
+        bottomNavigationView.setSelectedItemId(R.id.nav_home);
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+                switch (item.getItemId()) {
+                    case R.id.nav_add: {
+                        startActivity(new Intent(getApplicationContext(),AddActivity.class));
+                        overridePendingTransition(0,0);
+                        return true;
+                    }
+                    case R.id.nav_settings: {
+                        startActivity(new Intent(getApplicationContext(), UserActivity.class));
+                        overridePendingTransition(0,0);
+                        return true;
+                    }
+                    case R.id.nav_home: {
+                        return true;
+                    }
+
+                }
+                return false;
+            }
+        });
     }
 
 }

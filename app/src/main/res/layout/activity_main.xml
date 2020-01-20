@@ -7,7 +7,51 @@
     tools:context=".MainActivity">
 
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
+        <com.lorentzos.flingswipe.SwipeFlingAdapterView
+
+            android:id="@+id/frame"
+
+            android:layout_width="match_parent"
+
+            android:layout_height="match_parent"
+
+            android:background="#ffffff"
+
+            app:rotation_degrees="15.5"
+
+            tools:context=".MainActivity"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="-16dp" />
+
+        <EditText
+            android:id="@+id/editText"
+            android:layout_width="264dp"
+            android:layout_height="44dp"
+            android:layout_marginTop="20dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="Search"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.217"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/imageButton"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.384"
+            app:layout_constraintStart_toEndOf="@+id/editText"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/search2" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
@@ -22,25 +66,5 @@
 
 
         />
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <com.lorentzos.flingswipe.SwipeFlingAdapterView
-
-            android:id="@+id/frame"
-
-            android:background="#ffffff"
-
-            android:layout_width="match_parent"
-
-            android:layout_height="match_parent"
-
-            app:rotation_degrees="15.5"
-
-            tools:context=".MainActivity" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </RelativeLayout>
