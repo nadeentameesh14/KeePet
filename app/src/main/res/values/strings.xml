@@ -67,8 +67,6 @@
     <string name="likes">Likes</string>
     <string name="messages">Messages</string>
     <string name="logout">Logout</string>
-    <string name="open_drawer">open</string>
-    <string name="close_drawer">close</string>
 
 
 </resources>
