@@ -114,7 +114,7 @@ app.get("/pet/get", function (req, res) {
     };
   });
 });
-
+ 
 // app.get("/sentSMS", function (req, res) {
 //   // q = url.parse(req.url, true).query;
 //   let sql = "UPDATE sms SET sent = 1 WHERE id =" ;
