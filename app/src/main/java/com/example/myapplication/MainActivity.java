@@ -16,6 +16,87 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        al = new ArrayList<>();
+
+        al.add("post");
+        al.add("post");
+        al.add("post");
+        al.add("post");
+        al.add("post");
+        al.add("post");
+
+        arrayAdapter = new ArrayAdapter<>(this, R.layout.item, R.id.helloText, al );
+
+        SwipeFlingAdapterView flingContainer = (SwipeFlingAdapterView) findViewById(R.id.frame);
+
+        flingContainer.setAdapter(arrayAdapter);
+
+        flingContainer.setFlingListener(new SwipeFlingAdapterView.onFlingListener() {
+
+            @Override
+
+            public void removeFirstObjectInAdapter() {
+
+                Log.d("LIST", "removed object!");
+
+                al.remove(0);
+
+                arrayAdapter.notifyDataSetChanged();
+
+            }
+
+            @Override
+
+            public void onLeftCardExit(Object dataObject) { //left swipe with pet post
+
+                Toast.makeText(MainActivity.this, "Left!", Toast.LENGTH_SHORT).show();
+
+            }
+
+            @Override
+
+            public void onRightCardExit(Object dataObject) {       //right swipe with pet post
+
+                Toast.makeText(MainActivity.this, "Right!", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+
+            public void onAdapterAboutToEmpty(int itemsInAdapter) {
+
+
+
+            }
+            @Override
+
+            public void onScroll(float scrollProgressPercent) {
+
+
+            }
+
+        });
+
+        // Optionally add an OnItemClickListener
+
+        flingContainer.setOnItemClickListener(new SwipeFlingAdapterView.OnItemClickListener() {
+
+            @Override
+
+            public void onItemClicked(int itemPosition, Object dataObject) {    //click on pet post
+
+                Toast.makeText(MainActivity.this, "Clicked!", Toast.LENGTH_SHORT).show();
+
+                Intent intent = new Intent();
+
+                intent.putExtra("ID", 2);
+
+                startActivity(intent);
+
+
+            }
+
+        });
+
         bottomNav();
 
 
