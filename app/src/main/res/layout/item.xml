@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+
+    android:layout_gravity="center"
+
+    android:layout_width="wrap_content"
+
+    android:layout_height="wrap_content">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <View
+
+            android:id="@+id/item_swipe_right_indicator"
+
+            android:layout_width="5dp"
+
+            android:layout_height="42dp"
+
+            android:layout_gravity="right"
+
+            android:layout_margin="10dp"
+
+            android:layout_marginTop="16dp"
+
+            android:layout_marginEnd="36dp"
+            android:alpha="0"
+            android:background="#5AF"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+
+            android:id="@+id/item_swipe_left_indicator"
+
+            android:layout_width="20dp"
+
+            android:layout_height="20dp"
+
+            android:layout_margin="10dp"
+
+            android:alpha="0"
+
+            android:background="#A5F"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+
+            android:id="@+id/helloText"
+
+            android:layout_width="372dp"
+
+            android:layout_height="369dp"
+
+            android:layout_marginTop="12dp"
+
+            android:background="@drawable/post"
+
+            android:gravity="center"
+
+            android:textColor="@android:color/black"
+
+            android:textSize="40sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/imageView3" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="360dp"
+            android:layout_height="294dp"
+            android:paddingTop="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/pupper" />
+
+        <LinearLayout
+            android:layout_width="351dp"
+            android:layout_height="67dp"
+            android:layout_marginTop="1dp"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="@+id/helloText"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView"
+            app:layout_constraintVertical_bias="1.0">
+
+            <TextView
+                android:id="@+id/viewBreed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:autoText="false"
+                android:ems="10"
+                android:singleLine="true"
+                android:text="Breed"
+                android:textAlignment="center"
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/viewGender"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:text="Gender"
+                android:textAlignment="center"
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/viewAge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Age"
+                android:ems="10"
+                android:textAlignment="center"
+                android:textSize="24sp" />
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</FrameLayout>
