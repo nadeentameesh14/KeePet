@@ -3,45 +3,13 @@ package com.example.myapplication;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import org.json.JSONArray;
-
-import android.os.Bundle;
-import android.app.Activity;
-
-import android.content.Context;
-
-import android.os.Bundle;
-
-import android.util.Log;
-
-import android.view.LayoutInflater;
-import android.view.View;
-
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
-import com.lorentzos.flingswipe.SwipeFlingAdapterView;
-import java.util.ArrayList;
-
 public class MainActivity extends AppCompatActivity {
-
-    private ArrayList<String> al;
-
-    private ArrayAdapter<String> arrayAdapter;
-
-    private int i;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,23 +18,12 @@ public class MainActivity extends AppCompatActivity {
 
         al = new ArrayList<>();
 
-        al.add("php");
-
-        al.add("c");
-
-        al.add("python");
-
-        al.add("java");
-
-        al.add("html");
-
-        al.add("c++");
-
-        al.add("css");
-
-        al.add("javascript");
-
-        ImageView img = (ImageView) findViewById(R.id.imageView3);
+        al.add("post");
+        al.add("post");
+        al.add("post");
+        al.add("post");
+        al.add("post");
+        al.add("post");
 
         arrayAdapter = new ArrayAdapter<>(this, R.layout.item, R.id.helloText, al );
 
@@ -80,8 +37,6 @@ public class MainActivity extends AppCompatActivity {
 
             public void removeFirstObjectInAdapter() {
 
-                // this is the simplest way to delete an object from the Adapter (/AdapterView)
-
                 Log.d("LIST", "removed object!");
 
                 al.remove(0);
@@ -92,13 +47,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
 
-            public void onLeftCardExit(Object dataObject) {
-
-                //Do something on the left!
-
-                //You also have access to the original object.
-
-                //If you want to use it just cast it (String) dataObject
+            public void onLeftCardExit(Object dataObject) { //left swipe with pet post
 
                 Toast.makeText(MainActivity.this, "Left!", Toast.LENGTH_SHORT).show();
 
@@ -106,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
 
-            public void onRightCardExit(Object dataObject) {
+            public void onRightCardExit(Object dataObject) {       //right swipe with pet post
 
                 Toast.makeText(MainActivity.this, "Right!", Toast.LENGTH_SHORT).show();
             }
@@ -115,15 +64,7 @@ public class MainActivity extends AppCompatActivity {
 
             public void onAdapterAboutToEmpty(int itemsInAdapter) {
 
-                // Ask for more data here
 
-                al.add("XML ".concat(String.valueOf(i)));
-
-                arrayAdapter.notifyDataSetChanged();
-
-                Log.d("LIST", "notified");
-
-                i++;
 
             }
             @Override
@@ -141,16 +82,26 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
 
-            public void onItemClicked(int itemPosition, Object dataObject) {
+            public void onItemClicked(int itemPosition, Object dataObject) {    //click on pet post
 
                 Toast.makeText(MainActivity.this, "Clicked!", Toast.LENGTH_SHORT).show();
+
+                Intent intent = new Intent();
+
+                intent.putExtra("ID", 2);
+
+                startActivity(intent);
+
+
             }
 
         });
 
         bottomNav();
 
+
     }
+
 
     public void bottomNav() {
 
@@ -182,5 +133,4 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
 }
