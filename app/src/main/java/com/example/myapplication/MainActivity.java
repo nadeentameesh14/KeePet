@@ -50,9 +50,12 @@ public class MainActivity extends AppCompatActivity {
 
         al = new ArrayList<>();
 
-       
-
-        ImageView img = (ImageView) findViewById(R.id.imageView3);
+        al.add("post");
+        al.add("post");
+        al.add("post");
+        al.add("post");
+        al.add("post");
+        al.add("post");
 
         arrayAdapter = new ArrayAdapter<>(this, R.layout.item, R.id.helloText, al );
 
@@ -66,8 +69,6 @@ public class MainActivity extends AppCompatActivity {
 
             public void removeFirstObjectInAdapter() {
 
-                // this is the simplest way to delete an object from the Adapter (/AdapterView)
-
                 Log.d("LIST", "removed object!");
 
                 al.remove(0);
@@ -78,13 +79,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
 
-            public void onLeftCardExit(Object dataObject) {
-
-                //Do something on the left!
-
-                //You also have access to the original object.
-
-                //If you want to use it just cast it (String) dataObject
+            public void onLeftCardExit(Object dataObject) { //left swipe with pet post
 
                 Toast.makeText(MainActivity.this, "Left!", Toast.LENGTH_SHORT).show();
 
@@ -92,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
 
-            public void onRightCardExit(Object dataObject) {
+            public void onRightCardExit(Object dataObject) {       //right swipe with pet post
 
                 Toast.makeText(MainActivity.this, "Right!", Toast.LENGTH_SHORT).show();
             }
@@ -101,15 +96,7 @@ public class MainActivity extends AppCompatActivity {
 
             public void onAdapterAboutToEmpty(int itemsInAdapter) {
 
-                // Ask for more data here
 
-                al.add("XML ".concat(String.valueOf(i)));
-
-                arrayAdapter.notifyDataSetChanged();
-
-                Log.d("LIST", "notified");
-
-                i++;
 
             }
             @Override
@@ -127,9 +114,17 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
 
-            public void onItemClicked(int itemPosition, Object dataObject) {
+            public void onItemClicked(int itemPosition, Object dataObject) {    //click on pet post
 
                 Toast.makeText(MainActivity.this, "Clicked!", Toast.LENGTH_SHORT).show();
+
+                Intent intent = new Intent();
+
+                intent.putExtra("ID", 2);
+
+                startActivity(intent);
+
+
             }
 
         });
