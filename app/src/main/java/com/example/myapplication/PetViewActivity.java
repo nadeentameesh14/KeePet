@@ -88,7 +88,7 @@ public class PetViewActivity extends AppCompatActivity {
 
     public void getPetRequest() {
 
-        String URL_BASE = "http://61bd8f5f.ngrok.io";
+        String URL_BASE = "http://localhost:3000";
         String URL = URL_BASE + "/pet/get?id=" + ID;
 
         final RequestQueue requestQueue = Volley.newRequestQueue(PetViewActivity.this);

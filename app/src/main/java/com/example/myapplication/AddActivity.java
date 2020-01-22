@@ -175,7 +175,7 @@ public class AddActivity extends AppCompatActivity {
 
     public void sendPostRequest() {
 
-        String URL_BASE = "http://61bd8f5f.ngrok.io";
+        String URL_BASE = "http://localhost:3000";
         String URL= URL_BASE + "/pet/create";
 
         final RequestQueue requestQueue = Volley.newRequestQueue(AddActivity.this);

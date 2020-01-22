@@ -118,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
 
                 Toast.makeText(MainActivity.this, "Clicked!", Toast.LENGTH_SHORT).show();
 
-                Intent intent = new Intent();
+                Intent intent = new Intent(MainActivity.this, PetViewActivity.class);
 
                 intent.putExtra("ID", 2);
 
