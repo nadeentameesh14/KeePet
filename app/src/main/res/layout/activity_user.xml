@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -9,82 +10,147 @@
     <androidx.drawerlayout.widget.DrawerLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/drawer">
+        android:id="@+id/drawer"
+        tools:openDrawer="end"
+        >
 
-        <include
-            android:layout_height="match_parent"
+
+        <RelativeLayout
             android:layout_width="match_parent"
-            layout="@layout/app_toolbar"/>
-        <com.google.android.material.navigation.NavigationView
-            android:id="@+id/navigation_drawer"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:headerLayout="@layout/drawer_header"
-            app:menu="@menu/drawer_menu"
-            android:layout_gravity="start">
-        </com.google.android.material.navigation.NavigationView>
+            android:layout_height="match_parent">
+
+            <androidx.appcompat.widget.Toolbar
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/toolbar"
+                android:background="@color/colorPrimary"
+                >
+
+            </androidx.appcompat.widget.Toolbar>
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="600dp">
+            android:layout_height="600dp"
+            android:divider="?android:dividerHorizontal"
+            android:showDividers="middle">
 
 
             <TextView
                 android:id="@+id/Name"
-                android:layout_width="193dp"
+                android:layout_width="240dp"
                 android:layout_height="46dp"
+                android:autoSizeMaxTextSize="40sp"
+                android:autoSizeMinTextSize="20sp"
+                android:autoSizeTextType="uniform"
                 android:text="John Doe"
+                android:padding="4dp"
                 android:textColor="#000000"
-                android:textSize="36sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.745"
+                app:layout_constraintHorizontal_bias="0.725"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.148" />
+                app:layout_constraintVertical_bias="0.124"
+                tools:targetApi="o" />
 
             <TextView
                 android:id="@+id/username"
-                android:layout_width="193dp"
+                android:layout_width="240dp"
                 android:layout_height="46dp"
+                android:autoSizeMaxTextSize="20sp"
+                android:autoSizeMinTextSize="12sp"
+                android:autoSizeTextType="uniform"
+                android:gravity="center"
                 android:text="johndoe123"
                 android:textColor="#000000"
-                android:textSize="24sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.745"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.22" />
+                app:layout_constraintVertical_bias="0.01" />
 
             <TextView
                 android:id="@+id/bio"
-                android:layout_width="356dp"
-                android:layout_height="64dp"
+                android:layout_width="193dp"
+                android:layout_height="43dp"
+                android:padding="8dp"
                 android:text="Insert Bio Here"
-                android:textSize="18sp"
-                android:textAlignment="center"
+                android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.365"
+                app:layout_constraintHorizontal_bias="0.568"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.317" />
+                app:layout_constraintVertical_bias="0.224" />
 
-            <ImageView
-                android:id="@+id/imageView3"
-                android:layout_width="119dp"
-                android:layout_height="115dp"
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/profile_image"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@drawable/user_profile"
+                app:civ_border_color="#FF000000"
+                app:civ_border_width="2dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.057"
+                app:layout_constraintHorizontal_bias="0.053"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.125"
-                app:srcCompat="@drawable/user_profile" />
+                app:layout_constraintVertical_bias="0.136" />
+
+            <ImageButton
+                android:id="@+id/editButton"
+                android:layout_width="55dp"
+                android:layout_height="34dp"
+                android:background="@drawable/round_button"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.932"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.22"
+                app:srcCompat="@android:drawable/ic_menu_edit" />
+
+            <TextView
+                android:id="@+id/editProfile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/edit_profile"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.953"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.273" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#000000"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.318" />
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </RelativeLayout>
+
+        <com.google.android.material.navigation.NavigationView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/navigation_side"
+            app:menu="@menu/drawer_menu"
+            app:headerLayout="@layout/drawer_header"
+            android:layout_gravity="start">
+
+
+        </com.google.android.material.navigation.NavigationView>
 
 
     </androidx.drawerlayout.widget.DrawerLayout>
