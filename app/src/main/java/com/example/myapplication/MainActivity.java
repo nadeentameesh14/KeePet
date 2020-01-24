@@ -41,7 +41,6 @@ public class MainActivity extends AppCompatActivity {
 
     private ArrayAdapter<String> arrayAdapter;
 
-    private int i;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,11 +117,13 @@ public class MainActivity extends AppCompatActivity {
 
                 Toast.makeText(MainActivity.this, "Clicked!", Toast.LENGTH_SHORT).show();
 
-                Intent intent = new Intent();
+                Intent intent = new Intent(MainActivity.this, PetViewActivity.class);
 
                 intent.putExtra("ID", 2);
 
                 startActivity(intent);
+
+
 
 
             }

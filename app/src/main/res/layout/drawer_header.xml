@@ -13,7 +13,7 @@
 
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/displayPet"
         android:layout_width="186dp"
         android:layout_height="48dp"
         android:layout_gravity="top"
