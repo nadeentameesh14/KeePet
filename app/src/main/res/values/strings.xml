@@ -69,6 +69,7 @@
     <string name="logout">Logout</string>
     <string name="open_drawer">open</string>
     <string name="close_drawer">close</string>
+    <string name="edit_profile">Edit Profile</string>
 
 
 </resources>
