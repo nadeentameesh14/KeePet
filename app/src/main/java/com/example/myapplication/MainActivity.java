@@ -1,7 +1,9 @@
+
 package com.example.myapplication;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 import android.content.Context;
 import android.content.Intent;
@@ -37,11 +39,18 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ArrayList<String> al;
+    private ArrayList<Post> al;
 
-    private ArrayAdapter<String> arrayAdapter;
+    private ArrayAdapter<Post> arrayAdapter;
 
-    private int i;
+    ImageView img;
+
+    TextView a, b, c, d;
+
+    CircleImageView circ;
+
+    int id;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,12 +59,10 @@ public class MainActivity extends AppCompatActivity {
 
         al = new ArrayList<>();
 
-        al.add("post");
-        al.add("post");
-        al.add("post");
-        al.add("post");
-        al.add("post");
-        al.add("post");
+        Post p1 = new Post(img, circ, a, b, c, d, id);
+
+        al.add(p1);
+
 
         arrayAdapter = new ArrayAdapter<>(this, R.layout.item, R.id.helloText, al );
 
@@ -123,6 +130,8 @@ public class MainActivity extends AppCompatActivity {
                 intent.putExtra("ID", 2);
 
                 startActivity(intent);
+
+
 
 
             }
