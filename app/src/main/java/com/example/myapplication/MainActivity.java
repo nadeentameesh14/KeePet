@@ -1,31 +1,76 @@
+
 package com.example.myapplication;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import de.hdodenhof.circleimageview.CircleImageView;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import org.json.JSONArray;
+
+import android.os.Bundle;
+import android.app.Activity;
+
+import android.content.Context;
+
+import android.os.Bundle;
+
+import android.util.Log;
+
+import android.view.LayoutInflater;
+import android.view.View;
+
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+import com.lorentzos.flingswipe.SwipeFlingAdapterView;
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
+
+    private ArrayList<Post> al;
+
+    private ArrayAdapter<Post> arrayAdapter;
+
+   /*
+
+
+    ImageView img;
+    CircleImageView circ;
+    TextView a, b, c, d;
+    int id;*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        al = new ArrayList<>();
+        ImageView img = (ImageView) findViewById(R.id.displayPet);
 
-        al.add("post");
-        al.add("post");
-        al.add("post");
-        al.add("post");
-        al.add("post");
-        al.add("post");
+        TextView a = (TextView) findViewById(R.id.viewBreed), b = (TextView) findViewById(R.id.viewGender), c = (TextView) findViewById(R.id.viewAge), d = (TextView) findViewById(R.id.username);
 
-        arrayAdapter = new ArrayAdapter<>(this, R.layout.item, R.id.helloText, al );
+        CircleImageView circ = (CircleImageView)  findViewById(R.id.displayPic);
+
+        int id = 0;
+
+        al = new ArrayList<Post>();
+
+        Post p1 = new Post(img, circ, a, b, c, d, id);
+
+        al.add(p1);
+
+        arrayAdapter = new ArrayAdapter<Post>(this, R.layout.item, R.id.helloText, al );
 
         SwipeFlingAdapterView flingContainer = (SwipeFlingAdapterView) findViewById(R.id.frame);
 
@@ -86,11 +131,13 @@ public class MainActivity extends AppCompatActivity {
 
                 Toast.makeText(MainActivity.this, "Clicked!", Toast.LENGTH_SHORT).show();
 
-                Intent intent = new Intent();
+                Intent intent = new Intent(MainActivity.this, PetViewActivity.class);
 
                 intent.putExtra("ID", 2);
 
                 startActivity(intent);
+
+
 
 
             }
@@ -99,9 +146,7 @@ public class MainActivity extends AppCompatActivity {
 
         bottomNav();
 
-
     }
-
 
     public void bottomNav() {
 
@@ -133,4 +178,5 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
 }

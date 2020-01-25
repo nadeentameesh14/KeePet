@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -16,6 +18,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -32,6 +35,9 @@ public class PetViewActivity extends AppCompatActivity {
     private String Vac;
     private String Desc;
     private Integer ID;
+    private FloatingActionButton messageButton;
+    private ImageView imageView;
+    private int imageID;
 
 
     @Override
@@ -40,6 +46,27 @@ public class PetViewActivity extends AppCompatActivity {
         setContentView(R.layout.activity_pet_view);
 
         petInfo=(TextView)findViewById(R.id.petInfo) ;
+
+        Intent intent = getIntent();
+
+        ID = intent.getIntExtra("ID",0);
+
+        imageView = (ImageView)findViewById(R.id.image);
+        messageButton = (FloatingActionButton)findViewById(R.id.fab) ;
+
+        imageID = intent.getIntExtra("Image",R.drawable.default_upload);
+
+        imageView.setImageResource(imageID);
+
+
+        messageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent messageIntent = new Intent(PetViewActivity.this, MessagingActivity.class);
+
+                startActivity(messageIntent);
+            }
+        });
 
         getPetRequest();
 
@@ -84,7 +111,7 @@ public class PetViewActivity extends AppCompatActivity {
 
     public void getPetRequest() {
 
-        String URL_BASE = "http://61bd8f5f.ngrok.io";
+        String URL_BASE = "http://localhost:3000";
         String URL = URL_BASE + "/pet/get?id=" + ID;
 
         final RequestQueue requestQueue = Volley.newRequestQueue(PetViewActivity.this);

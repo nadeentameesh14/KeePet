@@ -45,6 +45,39 @@
         <item>Other</item>
     </string-array>
 
+    <string-array name="cities">
+        <item>Cairo</item>
+        <item>Alexandria</item>
+        <item>North Coast</item>
+        <item>El Gharbeyah</item>
+        <item>El Shaariyah</item>
+        <item>Other</item>
+    </string-array>
+
+    <string-array name="cairo_areas">
+        <item>Al-Rehab</item>
+        <item>Al-Obour</item>
+        <item>Al-Shorooq</item>
+        <item>Dokki</item>
+        <item>Downtown</item>
+        <item>Garden City</item>
+        <item>Haram</item>
+        <item>Heliopolis</item>
+        <item>Maadi</item>
+        <item>Madinty</item>
+        <item>Nasr City</item>
+        <item>New Cairo</item>
+        <item>Mohandseen</item>
+        <item>Sheraton</item>
+        <item>Zamalek</item>
+        <item>6th of October</item>
+        <item>Other</item>
+    </string-array>
+
+    <string-array name="other_areas">
+        <item>N/A</item>
+    </string-array>
+
     <string-array name="genders">
         <item>Male</item>
         <item>Female</item>
@@ -67,17 +100,9 @@
     <string name="likes">Likes</string>
     <string name="messages">Messages</string>
     <string name="logout">Logout</string>
-
-
-    <string name="title_activity_login">Sign in</string>
-    <string name="prompt_email">Email</string>
-    <string name="prompt_password">Password</string>
-    <string name="action_sign_in">Sign in or register</string>
-    <string name="action_sign_in_short">Sign in</string>
-    <string name="welcome">"Welcome !"</string>
-    <string name="invalid_username">Not a valid username</string>
-    <string name="invalid_password">Password must be >5 characters</string>
-    <string name="login_failed">"Login failed"</string>
+    <string name="open_drawer">open</string>
+    <string name="close_drawer">close</string>
+    <string name="edit_profile">Edit Profile</string>
 
 
 </resources>

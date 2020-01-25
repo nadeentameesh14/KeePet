@@ -32,6 +32,8 @@ public class AddActivity extends AppCompatActivity {
     private Spinner typeSpin;
     private Spinner breedSpin;
     private Spinner genderSpin;
+    private Spinner citySpin;
+    private Spinner areaSpin;
     private Switch vacSwitch;
     private EditText name;
     private EditText age;
@@ -42,6 +44,8 @@ public class AddActivity extends AppCompatActivity {
     private ArrayAdapter<CharSequence> adapter;
     private ArrayAdapter<CharSequence> adapter2;
     private ArrayAdapter<CharSequence> adapter3;
+    private ArrayAdapter<CharSequence> adapter4;
+    private ArrayAdapter<CharSequence> adapter5;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +75,8 @@ public class AddActivity extends AppCompatActivity {
         typeSpin = (Spinner)findViewById(R.id.type_spinner);
         breedSpin =(Spinner)findViewById(R.id.breed_spinner);
         genderSpin =(Spinner)findViewById(R.id.gender_spinner);
+        citySpin =(Spinner)findViewById(R.id.city_spinner);
+        areaSpin =(Spinner)findViewById(R.id.area_spinner);
         vacSwitch = (Switch)findViewById(R.id.vaccinated);
         description = (EditText)findViewById(R.id.description_edit);
         postButton = (ImageButton)findViewById(R.id.postButton);
@@ -91,6 +97,12 @@ public class AddActivity extends AppCompatActivity {
         adapter3.setDropDownViewResource(android.R.layout.simple_spinner_item);
         genderSpin.setAdapter(adapter3);
 
+        adapter4 = ArrayAdapter.createFromResource(this,R.array.cities,android.R.layout.simple_spinner_item);
+        adapter4.setDropDownViewResource(android.R.layout.simple_spinner_item);
+        citySpin.setAdapter(adapter4);
+
+
+
         typeSpin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -108,6 +120,34 @@ public class AddActivity extends AppCompatActivity {
                         breedSpin.setAdapter(adapter2);
                     } break;
                 }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        citySpin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String text = parent.getItemAtPosition(position).toString();
+
+                switch (text) {
+                    case "Cairo": {
+                        adapter5 = ArrayAdapter.createFromResource(getApplicationContext(),R.array.cairo_areas,android.R.layout.simple_spinner_item);
+                        adapter5.setDropDownViewResource(android.R.layout.simple_spinner_item);
+                        areaSpin.setAdapter(adapter5);
+                        areaSpin.setEnabled(true);
+                    } break;
+                    default: {
+                        adapter5 = ArrayAdapter.createFromResource(getApplicationContext(),R.array.other_areas,android.R.layout.simple_spinner_item);
+                        adapter5.setDropDownViewResource(android.R.layout.simple_spinner_item);
+                        areaSpin.setAdapter(adapter5);
+                        areaSpin.setEnabled(false);
+                    } break;
+                }
+
             }
 
             @Override
@@ -175,7 +215,7 @@ public class AddActivity extends AppCompatActivity {
 
     public void sendPostRequest() {
 
-        String URL_BASE = "http://61bd8f5f.ngrok.io";
+        String URL_BASE = "http://localhost:3000";
         String URL= URL_BASE + "/pet/create";
 
         final RequestQueue requestQueue = Volley.newRequestQueue(AddActivity.this);
