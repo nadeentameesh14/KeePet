@@ -153,9 +153,10 @@ public class MessagingActivity extends AppCompatActivity implements RoomListener
 
 
 
-    /*
+
     @Override
     public void onMessage(Room room, Message receivedMessage) {
+        /*
         // To transform the raw JsonNode into a POJO we can use an
         final JsonNode json; final Member member;
         final ObjectMapper mapper = new ObjectMapper();
@@ -178,8 +179,9 @@ public class MessagingActivity extends AppCompatActivity implements RoomListener
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
+         */
     }
-    */
+
     private String getRandomName() {
 
         String[] adjs = {"autumn", "hidden", "bitter", "misty", "silent", "empty", "dry", "dark", "summer", "icy", "delicate", "quiet", "white", "cool", "spring", "winter", "patient", "twilight", "dawn", "crimson", "wispy", "weathered", "blue", "billowing", "broken", "cold", "damp", "falling", "frosty", "green", "long", "late", "lingering", "bold", "little", "morning", "muddy", "old", "red", "rough", "still", "small", "sparkling", "throbbing", "shy", "wandering", "withered", "wild", "black", "young", "holy", "solitary", "fragrant", "aged", "snowy", "proud", "floral", "restless", "divine", "polished", "ancient", "purple", "lively", "nameless"};
