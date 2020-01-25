@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -33,6 +34,9 @@ public class PetViewActivity extends AppCompatActivity {
     private String Desc;
     private Integer ID;
 
+    private ImageView imageView;
+    private int imageID;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +48,13 @@ public class PetViewActivity extends AppCompatActivity {
         Intent intent = getIntent();
 
         ID = intent.getIntExtra("ID",0);
+
+        imageView = (ImageView)findViewById(R.id.image) ;
+
+        imageID = intent.getIntExtra("Image",R.drawable.default_upload);
+
+        imageView.setImageResource(imageID);
+
 
         getPetRequest();
 
