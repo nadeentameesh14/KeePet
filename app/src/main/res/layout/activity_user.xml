@@ -154,7 +154,7 @@
                 >
 
                 <GridView
-                    android:id="@+id/gridview"
+                    android:id="@+id/postgridview"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="#00000000"

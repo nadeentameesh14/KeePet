@@ -49,7 +49,8 @@
             app:layout_constraintHorizontal_bias="0.384"
             app:layout_constraintStart_toEndOf="@+id/editText"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/search2" />
+            app:srcCompat="@drawable/search2"
+            tools:ignore="VectorDrawableCompat" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
