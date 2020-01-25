@@ -3,10 +3,6 @@
 
     <group>
         <item
-            android:icon="@drawable/settings"
-            android:title="@string/listings"
-            android:id="@+id/nav_listings"/>
-        <item
             android:icon="@drawable/likes"
             android:title="@string/likes"
             android:id="@+id/nav_likes"/>

@@ -7,12 +7,22 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.BaseAdapter;
+import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.toolbox.PoolingByteArrayOutputStream;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
+
+import java.util.List;
 
 public class UserActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
@@ -20,7 +30,10 @@ public class UserActivity extends AppCompatActivity implements NavigationView.On
     NavigationView navigationView;
     Toolbar toolbar;
     ActionBarDrawerToggle toggle;
-
+    GridView gridView;
+    ImageView imageView;
+    int [] images = {R.drawable.pupper,R.drawable.kitty,R.drawable.doggo2,R.drawable.kitty2,R.drawable.doggo3,R.drawable.kitty3,R.drawable.doggo4,
+            R.drawable.kitty4,R.drawable.paws,R.drawable.paws};
 
 
     @Override
@@ -44,6 +57,23 @@ public class UserActivity extends AppCompatActivity implements NavigationView.On
         }
 
 
+        gridView = findViewById(R.id.gridview);
+
+        CustomAdapter customAdapter = new CustomAdapter();
+        gridView.setAdapter(customAdapter);
+
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                Intent intent = new Intent(getApplicationContext(), PetViewActivity.class);
+
+                intent.putExtra("Image", images[position]);
+                intent.putExtra("ID", 2);
+                startActivity(intent);
+
+            }
+        });
 
         bottomNav();
     }
@@ -85,20 +115,55 @@ public class UserActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
         switch(item.getItemId()) {
-            case R.id.nav_listings: {
-                Toast.makeText(UserActivity.this, "Listings", Toast.LENGTH_LONG).show();
-            }
+            case R.id.nav_likes: {
+                Toast.makeText(UserActivity.this, "Likes", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(getApplicationContext(),LikesActivity.class);
+                startActivity(intent);
+                }
                 break;
-            case R.id.nav_likes:
-                Toast.makeText(UserActivity.this,"Likes", Toast.LENGTH_LONG).show();
+            case R.id.nav_messages: {
+                Toast.makeText(UserActivity.this, "Messages", Toast.LENGTH_LONG).show();
+
+                }
                 break;
-            case R.id.nav_messages:
-                Toast.makeText(UserActivity.this,"Messages", Toast.LENGTH_LONG).show();
-                break;
-            case R.id.nav_logout:
+            case R.id.nav_logout: {
                 Toast.makeText(UserActivity.this, "Log Out", Toast.LENGTH_LONG).show();
+                
+                }
                 break;
         }
         return false;
+    }
+
+    private class CustomAdapter extends BaseAdapter {
+
+
+        @Override
+        public int getCount() {
+            return images.length;
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return null;
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return 0;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+
+            View v = getLayoutInflater().inflate(R.layout.post_item,null);
+
+            imageView = v.findViewById(R.id.post_thumbnail);
+
+            imageView.setImageResource(images[position]);
+
+            return v;
+
+        }
     }
 }

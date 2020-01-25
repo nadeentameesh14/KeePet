@@ -14,6 +14,7 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".LikesActivity"></activity>
         <activity android:name=".PetViewActivity" />
         <activity android:name=".UserActivity" />
         <activity android:name=".AddActivity" />

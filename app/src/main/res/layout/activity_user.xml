@@ -25,118 +25,146 @@
                 android:id="@+id/toolbar"
                 android:background="@color/colorPrimary"
                 >
+                <TextView
+                    android:id="@+id/username"
+                    android:layout_width="240dp"
+                    android:layout_height="46dp"
+                    android:autoSizeMaxTextSize="20sp"
+                    android:autoSizeMinTextSize="12sp"
+                    android:autoSizeTextType="uniform"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:text="johndoe123"
+                    android:textColor="#000000"
+                     />
 
             </androidx.appcompat.widget.Toolbar>
 
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="600dp"
-            android:divider="?android:dividerHorizontal"
-            android:showDividers="middle">
-
-
-            <TextView
-                android:id="@+id/Name"
-                android:layout_width="240dp"
-                android:layout_height="46dp"
-                android:autoSizeMaxTextSize="40sp"
-                android:autoSizeMinTextSize="20sp"
-                android:autoSizeTextType="uniform"
-                android:text="John Doe"
-                android:padding="4dp"
-                android:textColor="#000000"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.725"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.124"
-                tools:targetApi="o" />
-
-            <TextView
-                android:id="@+id/username"
-                android:layout_width="240dp"
-                android:layout_height="46dp"
-                android:autoSizeMaxTextSize="20sp"
-                android:autoSizeMinTextSize="12sp"
-                android:autoSizeTextType="uniform"
-                android:gravity="center"
-                android:text="johndoe123"
-                android:textColor="#000000"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.01" />
-
-            <TextView
-                android:id="@+id/bio"
-                android:layout_width="193dp"
-                android:layout_height="43dp"
-                android:padding="8dp"
-                android:text="Insert Bio Here"
-                android:textSize="14sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.568"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.224" />
-
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/profile_image"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:src="@drawable/user_profile"
-                app:civ_border_color="#FF000000"
-                app:civ_border_width="2dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.053"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.136" />
-
-            <ImageButton
-                android:id="@+id/editButton"
-                android:layout_width="55dp"
-                android:layout_height="34dp"
-                android:background="@drawable/round_button"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.932"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.22"
-                app:srcCompat="@android:drawable/ic_menu_edit" />
-
-            <TextView
-                android:id="@+id/editProfile"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/edit_profile"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.953"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.273" />
+                android:orientation="vertical"
+                android:id="@+id/topbar"
+                android:layout_centerInParent="true"
+                android:layout_below="@id/toolbar"
+
+                >
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="140dp"
+                    android:divider="?android:dividerHorizontal"
+                    android:showDividers="middle">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/profile_image"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:src="@drawable/user_profile"
+                        app:civ_border_color="#FF000000"
+                        app:civ_border_width="2dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintHorizontal_bias="0.05"
+                        app:layout_constraintVertical_bias="0.7"/>
+
+
+                    <TextView
+                        android:id="@+id/Name"
+                        android:layout_width="240dp"
+                        android:layout_height="46dp"
+                        android:autoSizeMaxTextSize="40sp"
+                        android:autoSizeMinTextSize="20sp"
+                        android:autoSizeTextType="uniform"
+                        android:padding="4dp"
+                        android:text="John Doe"
+                        android:textColor="#000000"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.725"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.297"
+                        tools:targetApi="o" />
+
+                    <TextView
+                        android:id="@+id/bio"
+                        android:layout_width="193dp"
+                        android:layout_height="43dp"
+                        android:padding="8dp"
+                        android:text="Insert Bio Here"
+                        android:textSize="14sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.568"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.8" />
+
+                    <ImageButton
+                        android:id="@+id/editButton"
+                        android:layout_width="55dp"
+                        android:layout_height="34dp"
+                        android:background="@drawable/round_button"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.93"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.698"
+                        app:srcCompat="@android:drawable/ic_menu_edit" />
+
+                    <TextView
+                        android:id="@+id/editProfile"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/edit_profile"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.953"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.91" />
+
+                    <LinearLayout
+                        android:id="@+id/linearLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#000000"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.99"
+                        android:orientation="horizontal" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#000000"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.318" />
+                android:layout_height="500dp"
+                android:orientation="vertical"
+                android:layout_centerInParent="true"
+                android:layout_below="@id/topbar"
+                >
+
+                <GridView
+                    android:id="@+id/gridview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#00000000"
+                    android:horizontalSpacing="1dp"
+                    android:numColumns="3"
+                    android:verticalSpacing="1dp" />
+
+            </LinearLayout>
 
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
         </RelativeLayout>
@@ -153,21 +181,36 @@
         </com.google.android.material.navigation.NavigationView>
 
 
+
+
+
+
+
+
     </androidx.drawerlayout.widget.DrawerLayout>
 
+
+
+
+
+
     <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottom_navigation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        app:itemBackground="@color/colorPrimary"
-        app:itemTextColor="@drawable/selector"
-        app:itemIconTint="@drawable/selector"
-        app:menu="@menu/bottom_nav"
+                android:id="@+id/bottom_navigation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                app:itemBackground="@color/colorPrimary"
+                app:itemTextColor="@drawable/selector"
+                app:itemIconTint="@drawable/selector"
+                app:menu="@menu/bottom_nav"
 
 
 
-        />
+                />
+
+
+
+
 
 
 
