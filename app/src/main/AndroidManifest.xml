@@ -18,8 +18,10 @@
         <activity android:name=".LikesActivity" />
         <activity android:name=".PetViewActivity" />
         <activity android:name=".UserActivity" />
+        <activity android:name=".MessagingActivity"/>
         <activity android:name=".AddActivity" />
         <activity android:name=".MainActivity">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
