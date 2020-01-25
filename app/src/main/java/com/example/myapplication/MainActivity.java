@@ -19,6 +19,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
@@ -42,8 +43,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
 
-        setContentView(R.layout.swipecard);
 
         ImageView img = (ImageView) findViewById(R.id.displayPet);
 
@@ -52,11 +53,18 @@ public class MainActivity extends AppCompatActivity {
 
         CircleImageView circ = (CircleImageView)  findViewById(R.id.displayPic);
 
-        TextView a = (TextView) findViewById(R.id.helloText);
+       // LayoutInflater inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        a.setText("ABOOS EDAK ESHT3'L YA IBN L KALB");
+        //View vi = inflater.inflate(R.layout.swipecard, null);
 
-        setContentView(R.layout.activity_main);
+
+        LayoutInflater inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        RelativeLayout parent = (RelativeLayout) findViewById(R.id.parentlayout);// in main activity
+        View child = inflater.inflate(R.layout.swipecard, null);
+        TextView a = (TextView) child.findViewById(R.id.viewBreed);
+        a.setText("ABOOS EDAK ESHT3'L YA IBN L KALB YA");
+        parent.addView(child);
+
 
 
         int id = 0;
@@ -145,8 +153,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
         bottomNav();
-
-
 
     }
 

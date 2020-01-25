@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/parentlayout"
     tools:context=".MainActivity">
 
 
@@ -12,8 +13,6 @@
         android:layout_height="match_parent">
 
 
-        <include
-            layout="@layout/swipecard" />
 
         <com.lorentzos.flingswipe.SwipeFlingAdapterView
 
@@ -31,7 +30,7 @@
             tools:layout_editor_absoluteX="0dp"
             tools:layout_editor_absoluteY="-16dp" >
 
-            
+
 
 
         </com.lorentzos.flingswipe.SwipeFlingAdapterView>
