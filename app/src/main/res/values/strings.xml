@@ -45,17 +45,37 @@
         <item>Other</item>
     </string-array>
 
-    <string-array name="areas">
-        <item>Beagle</item>
-        <item>BullDog</item>
-        <item>Chihuahua</item>
-        <item>German Shepard</item>
-        <item>Golden Retriever</item>
-        <item>Husky</item>
-        <item>Pomeranian</item>m
-        <item>Poodle</item>
-        <item>Pug</item>
+    <string-array name="cities">
+        <item>Cairo</item>
+        <item>Alexandria</item>
+        <item>North Coast</item>
+        <item>El Gharbeyah</item>
+        <item>El Shaariyah</item>
         <item>Other</item>
+    </string-array>
+
+    <string-array name="cairo_areas">
+        <item>Al-Rehab</item>
+        <item>Al-Obour</item>
+        <item>Al-Shorooq</item>
+        <item>Dokki</item>
+        <item>Downtown</item>
+        <item>Garden City</item>
+        <item>Haram</item>
+        <item>Heliopolis</item>
+        <item>Maadi</item>
+        <item>Madinty</item>
+        <item>Nasr City</item>
+        <item>New Cairo</item>
+        <item>Mohandseen</item>
+        <item>Sheraton</item>
+        <item>Zamalek</item>
+        <item>6th of October</item>
+        <item>Other</item>
+    </string-array>
+
+    <string-array name="other_areas">
+        <item>N/A</item>
     </string-array>
 
     <string-array name="genders">
