@@ -1,4 +1,3 @@
-
 package com.example.myapplication;
 
 import androidx.annotation.NonNull;
@@ -9,33 +8,22 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ListView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-
-import org.json.JSONArray;
-
-import android.os.Bundle;
-import android.app.Activity;
-
-import android.content.Context;
-
-import android.os.Bundle;
 
 import android.util.Log;
 
 import android.view.LayoutInflater;
 import android.view.View;
 
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 import java.util.ArrayList;
+import java.util.zip.Inflater;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -54,13 +42,22 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+
+        setContentView(R.layout.swipecard);
 
         ImageView img = (ImageView) findViewById(R.id.displayPet);
 
-        TextView a = (TextView) findViewById(R.id.viewBreed), b = (TextView) findViewById(R.id.viewGender), c = (TextView) findViewById(R.id.viewAge), d = (TextView) findViewById(R.id.username);
+        //TextView a = (TextView) findViewById(R.id.viewBreed);
+        TextView b = (TextView) findViewById(R.id.viewGender), c = (TextView) findViewById(R.id.viewAge), d = (TextView) findViewById(R.id.username);
 
         CircleImageView circ = (CircleImageView)  findViewById(R.id.displayPic);
+
+        TextView a = (TextView) findViewById(R.id.helloText);
+
+        a.setText("ABOOS EDAK ESHT3'L YA IBN L KALB");
+
+        setContentView(R.layout.activity_main);
+
 
         int id = 0;
 
@@ -70,9 +67,12 @@ public class MainActivity extends AppCompatActivity {
 
         al.add(p1);
 
-        arrayAdapter = new ArrayAdapter<Post>(this, R.layout.item, R.id.helloText, al );
+        setContentView(R.layout.activity_main);
+
+        arrayAdapter = new ArrayAdapter<Post>(this, R.layout.swipecard, R.id.helloText, al );
 
         SwipeFlingAdapterView flingContainer = (SwipeFlingAdapterView) findViewById(R.id.frame);
+
 
         flingContainer.setAdapter(arrayAdapter);
 
@@ -145,6 +145,8 @@ public class MainActivity extends AppCompatActivity {
         });
 
         bottomNav();
+
+
 
     }
 
