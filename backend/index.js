@@ -76,12 +76,12 @@ app.post("/auth/register", function (req, res) {
 
 
 app.post("/pet/create",  function (req, res) {
-  
+
     if( !req.body )
       return res.sendStatus(400);
 
-  let sql = "INSERT INTO pet (name, age , breed , type , gender , seller , description , vaccination  ) VALUES (" ;
-  sql = sql + "'" + req.body.name + "'," + req.body.age + ",'" + req.body.breed + "','" + req.body.type + "','" + req.body.gender + "','" + "moussa"  + "','" +  req.body.description  + "'," +  req.body.vaccination + ")";
+  let sql = "INSERT INTO pet (name, age , breed , type , gender , seller , description , vaccination , city , area , adapted  ) VALUES (" ;
+  sql = sql + "'" + req.body.name + "'," + req.body.age + ",'" + req.body.breed + "','" + req.body.type + "','" + req.body.gender + "','" + "moussa"  + "','" +  req.body.description  + "'," +  req.body.vaccination + ",'" + req.body.city +"','" + req.body.area + "'," + 0 + ")";
   let query = db.query(sql, function (err, result) {
     if (err) {
       console.log(err);
@@ -96,8 +96,44 @@ app.post("/pet/create",  function (req, res) {
 });
 
 
-app.get("/pet/get", function (req, res) {
+app.get("/pet/get/nonadapted", function (req, res) { 
+    if( !req.body )
+        return res.sendStatus(400);
   
+    let sql = "SELECT * FROM pet WHERE addaped = 0" ;
+    let query = db.query(sql, function (err, result) {
+      if (err) {
+        console.log(err);
+        throw err;
+      }
+      else{
+        res.send(result);
+        console.log("returned 1 row");
+      };
+    });
+});
+
+
+
+app.get("/pet/get/adapted", function (req, res) { 
+    if( !req.body )
+        return res.sendStatus(400);
+  
+    let sql = "SELECT * FROM pet WHERE addaped = 1" ;
+    let query = db.query(sql, function (err, result) {
+      if (err) {
+        console.log(err);
+        throw err;
+      }
+      else{
+        res.send(result);
+        console.log("returned 1 row");
+      };
+    });
+});
+   
+
+app.get("/pet/get/byId", function (req, res) { 
   if( !req.body )
       return res.sendStatus(400);
 
@@ -115,6 +151,7 @@ app.get("/pet/get", function (req, res) {
   });
 });
  
+
 // app.get("/sentSMS", function (req, res) {
 //   // q = url.parse(req.url, true).query;
 //   let sql = "UPDATE sms SET sent = 1 WHERE id =" ;
@@ -130,6 +167,7 @@ app.get("/pet/get", function (req, res) {
 //     };
 //   });
 // });
+
 
 app.get('/', (req, res) => {
   res.send('Hello World!')
