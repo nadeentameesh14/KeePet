@@ -12,17 +12,14 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.android.volley.toolbox.PoolingByteArrayOutputStream;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
-
-import java.util.List;
 
 public class UserActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
@@ -31,6 +28,7 @@ public class UserActivity extends AppCompatActivity implements NavigationView.On
     Toolbar toolbar;
     ActionBarDrawerToggle toggle;
     GridView gridView;
+    ImageButton editProfile;
     ImageView imageView;
     int [] images = {R.drawable.pupper,R.drawable.kitty,R.drawable.doggo2,R.drawable.kitty2,R.drawable.doggo3,R.drawable.kitty3,R.drawable.doggo4,
             R.drawable.kitty4,R.drawable.paws,R.drawable.paws};
@@ -57,7 +55,7 @@ public class UserActivity extends AppCompatActivity implements NavigationView.On
         }
 
 
-        gridView = findViewById(R.id.gridview);
+        gridView = findViewById(R.id.postgridview);
 
         CustomAdapter customAdapter = new CustomAdapter();
         gridView.setAdapter(customAdapter);
@@ -75,6 +73,18 @@ public class UserActivity extends AppCompatActivity implements NavigationView.On
             }
         });
 
+
+        editProfile = (ImageButton)findViewById(R.id.editButton);
+
+        editProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(getApplicationContext(),EditProfileActivity.class);
+                startActivity(intent);
+
+            }
+        });
         bottomNav();
     }
 
@@ -123,12 +133,12 @@ public class UserActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.nav_messages: {
                 Toast.makeText(UserActivity.this, "Messages", Toast.LENGTH_LONG).show();
-
+                Intent intent = new Intent(getApplicationContext(),MessagingActivity.class);
+                startActivity(intent);
                 }
                 break;
             case R.id.nav_logout: {
                 Toast.makeText(UserActivity.this, "Log Out", Toast.LENGTH_LONG).show();
-                
                 }
                 break;
         }
