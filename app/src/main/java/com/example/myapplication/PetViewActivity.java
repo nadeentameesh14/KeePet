@@ -65,7 +65,7 @@ public class PetViewActivity extends AppCompatActivity {
 
             }
         });
-        
+
         getPetRequest();
 
         bottomNav();
