@@ -156,7 +156,7 @@ public class MessagingActivity extends AppCompatActivity implements RoomListener
 
     @Override
     public void onMessage(Room room, Message receivedMessage) {
-        /*
+
         // To transform the raw JsonNode into a POJO we can use an
         final JsonNode json; final Member member;
         final ObjectMapper mapper = new ObjectMapper();
@@ -179,7 +179,7 @@ public class MessagingActivity extends AppCompatActivity implements RoomListener
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
-         */
+
     }
 
     private String getRandomName() {
