@@ -43,28 +43,34 @@ public class MainActivity extends AppCompatActivity {
 
     private ArrayAdapter<Post> arrayAdapter;
 
+   /*
+
+
     ImageView img;
-
-    TextView a, b, c, d;
-
     CircleImageView circ;
-
-    int id;
-
+    TextView a, b, c, d;
+    int id;*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        al = new ArrayList<>();
+        ImageView img = (ImageView) findViewById(R.id.displayPet);
+
+        TextView a = (TextView) findViewById(R.id.viewBreed), b = (TextView) findViewById(R.id.viewGender), c = (TextView) findViewById(R.id.viewAge), d = (TextView) findViewById(R.id.username);
+
+        CircleImageView circ = (CircleImageView)  findViewById(R.id.displayPic);
+
+        int id = 0;
+
+        al = new ArrayList<Post>();
 
         Post p1 = new Post(img, circ, a, b, c, d, id);
 
         al.add(p1);
 
-
-        arrayAdapter = new ArrayAdapter<>(this, R.layout.item, R.id.helloText, al );
+        arrayAdapter = new ArrayAdapter<Post>(this, R.layout.item, R.id.helloText, al );
 
         SwipeFlingAdapterView flingContainer = (SwipeFlingAdapterView) findViewById(R.id.frame);
 

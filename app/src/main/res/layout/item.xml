@@ -13,8 +13,8 @@
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="431dp">
+        android:layout_width="389dp"
+        android:layout_height="509dp">
 
         <View
 
@@ -56,33 +56,35 @@
 
             android:id="@+id/helloText"
 
-            android:layout_width="394dp"
+            android:layout_width="386dp"
 
-            android:layout_height="420dp"
-
-            android:layout_marginTop="12dp"
+            android:layout_height="506dp"
 
             android:background="@drawable/post"
 
             android:gravity="center"
 
-            android:textColor="@android:color/black"
-
+            android:textColor="#00000000"
             android:textSize="40sp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/displayPet" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/displayPet"
-            android:layout_width="371dp"
-            android:layout_height="310dp"
+            android:layout_width="369dp"
+            android:layout_height="325dp"
             android:layout_marginTop="60dp"
             android:paddingTop="20dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintBottom_toBottomOf="@+id/helloText"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.444"
+
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.282"
             app:srcCompat="@drawable/pupper" />
 
         <LinearLayout
@@ -92,16 +94,17 @@
             android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="@+id/helloText"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.6"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/displayPet"
-            app:layout_constraintVertical_bias="1.0">
+            app:layout_constraintVertical_bias="0.406">
 
             <TextView
                 android:id="@+id/viewBreed"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:autoText="false"
+
                 android:ems="10"
                 android:singleLine="true"
                 android:text="Breed"
@@ -127,6 +130,7 @@
                 android:text="Age"
                 android:textAlignment="center"
                 android:textSize="24sp" />
+
         </LinearLayout>
 
         <TextView
@@ -149,6 +153,7 @@
             app:civ_border_width="2dp"
             app:layout_constraintStart_toStartOf="@+id/item_swipe_left_indicator"
             app:layout_constraintTop_toTopOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
