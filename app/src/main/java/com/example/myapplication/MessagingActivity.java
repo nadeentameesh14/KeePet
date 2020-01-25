@@ -150,16 +150,14 @@ public class MessagingActivity extends AppCompatActivity implements RoomListener
 
     }
 
-    @Override
-    public void onMessage(Room room, Message message) {
 
-    }
 
 
     /*
     @Override
-    public void onMessage(Room room, final JsonNode json, final Member member) {
-        // To transform the raw JsonNode into a POJO we can use an ObjectMapper
+    public void onMessage(Room room, Message receivedMessage) {
+        // To transform the raw JsonNode into a POJO we can use an
+        final JsonNode json; final Member member;
         final ObjectMapper mapper = new ObjectMapper();
         try {
             // member.clientData is a MemberData object, let's parse it as such
@@ -168,7 +166,7 @@ public class MessagingActivity extends AppCompatActivity implements RoomListener
             boolean belongsToCurrentUser = receivedMessage.getClientID().equals(scaledrone.getClientID());
             // since the message body is a simple string in our case we can use json.asText() to parse it as such
             // if it was instead an object we could use a similar pattern to data parsing
-            final Message message = new Message(receivedMessage.getData().asText(), data, belongsToCurrentUser);
+            final com.example.myapplication.Message message = new com.example.myapplication.Message(receivedMessage.getData().asText(), data, belongsToCurrentUser);
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
