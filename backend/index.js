@@ -10,14 +10,16 @@ const express = require('express')
 const mysql = require('mysql')
 const app = express();
 const multer = require('multer');
+const bcrypt = require('bcrypt');
 const DIR = 'uploads' ;
+const jwt = require('jsonwebtoken');
 
 const storage = multer.diskStorage({
   destination: function (req, file, callback) {
     callback(null, DIR );
   },
   filename: function (req, file, cb) {
-    cb(null, "KEEPET" + new Date().toISOString().replace(/:/g, '-') + file.originalname );
+    cb(null,  new Date().toISOString().replace(/:/g, '-') + file.originalname );
   }
 });
 
@@ -25,9 +27,8 @@ const upload = multer({storage : storage})
 
 var bodyParser = require('body-parser');
 
+app.use(bodyParser.urlencoded({ extended: false })); // support encoded bodies
 app.use(bodyParser.json()); // support json encoded bodies
-// app.use(bodyParser.urlencoded({ extended: false })); // support encoded bodies
-
 
 
 //create connection
@@ -47,49 +48,113 @@ db.connect((err) => {
 
 
 
-app.post('/auth/login', function(request, response) {
-	var email = request.body.email;
-	var password = request.body.password;
-	if (email && password) {
-		connection.query('SELECT * FROM user WHERE email = ? AND password = ?', [email, password], function(error, results, fields) {
-			if (results.length > 0) {
-				request.session.loggedin = true;
-				request.session.email = email;
-			} else {
-				response.send('Incorrect email and/or Password!');
-			}			
-			response.end();
-		});
-	} else {
-		response.send('Please enter email and Password!');
-		response.end();
-	}
+app.post("/auth/register",  function (req, res) {
+
+    let sql = "SELECT * FROM user where email = " ;
+    sql = sql + "'" + req.body.email + "'" ;
+    let query = db.query ( sql , function (error, resultt){
+
+      if (error) {
+        console.log( "error occured" );
+        res.send(error);
+      }else{
+        
+        if( resultt.length < 1 ) {
+          var hashedPassword = bcrypt.hashSync(req.body.password, 10);
+
+          let sql = "INSERT INTO user (email , first , last , password , phone ) VALUES (" ;
+          sql = sql + "'" + req.body.email + "','" + req.body.first + "','" + req.body.last + "','" + hashedPassword + "'," + req.body.phone +  ")";    
+          let query = db.query(sql, function (err, result) {
+            if (err) {
+              console.log(err);
+              res.send(err);
+            }
+            else{
+              res.send(result);
+              console.log("user inserted sucessfully")
+            };
+          });
+        }else{
+          console.log("This email has already been registerd")
+          res.send("This email has already been registerd ")
+        }
+      }
+
+    })    
 });
 
 
 
-app.post("/auth/register", function (req, res) {
 
-    if( !req.body )
-      return res.sendStatus(400);
+app.post("/auth/login",  function (req, res) {
+  let sql = "SELECT * FROM user where email = " ;
+  sql = sql + "'" + req.body.email + "'" ;
+  let query = db.query ( sql , function (err, result){
+    
+    if (err) {
+      console.log( "error occured" );
+      res.send(err);
+    }else{
 
-    // q = url.parse(req.url, true).query;
-    let sql = "INSERT INTO user (email , first , last , password , phone ) VALUES (" ;
-    sql = sql + "'" + req.body.email + "','" + req.body.first + "','" + req.body.last + "','" + req.body.password + "'," + req.body.phone +  ")";
-    let query = db.query(sql, function (err, result) {
+      if( result.length > 0 ){
+        console.log( req.body.password , " " , result[0].password  )
+
+        if( bcrypt.compareSync(req.body.password, result[0].password ) ) {
+
+          const token = jwt.sign({
+            email: result[0].email ,
+            password: result[0].password
+          },
+          "JWTOKEN",{
+            expiresIn: "1hr"
+          }
+        );
+
+          console.log("Correct Credentials !")
+          return res.status(200).json({
+            message: "Auth Succesfull" ,
+            token : token 
+          })
+        } else {
+          console.log('Incorrect password !')
+          res.send('Incorrect password !')
+        }
+
+      }  
+      else{
+        console.log('Email not found !')
+        res.send('Email not found !') ;
+      } 
+    }    
+  });
+});
+
+
+app.post("/user/update", upload.single('image') , function (req, res) {
+
+  if( !req.body )
+    return res.sendStatus(400);
+
+
+  console.log( req.file ) ;
+  var hashedPassword = bcrypt.hashSync(req.body.password, 10);
+  
+  let sql = "UPDATE user SET email = " + req.body.email  + ", first = " + req.body.first + ", last = " + req.body.last +", password = " + hashedPassword + ", phone = " +  req.body.phone ;
+  sql = sql + " WHERE email = " + req.body.email ;
+
+  let query = db.query(sql, function (err, result) {
       if (err) {
         console.log(err);
-        res.send(req);
+        res.send(err);
         throw err;
       }
       else{
         res.send(result);
-        console.log("user inserted sucessfully")
+        console.log("user data updated successfully ")
       };
-    });
+  });
+
 });
-
-
 
 app.post("/pet/create", upload.single('image') , function (req, res) {
 
@@ -110,9 +175,12 @@ app.post("/pet/create", upload.single('image') , function (req, res) {
         else{
         res.send(result);
         console.log("pet inserted sucessfully")
+        console.log(req.body);
         };
     });
 });
+
+
 
 
 
@@ -152,6 +220,7 @@ app.get("/pet/get/adopted", function (req, res) {
     });
 });
    
+
 
 app.get("/pet/get/byId", function (req, res) { 
   if( !req.body )
