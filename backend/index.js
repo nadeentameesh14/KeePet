@@ -9,11 +9,25 @@
 const express = require('express')
 const mysql = require('mysql')
 const app = express();
+const multer = require('multer');
+const DIR = 'uploads' ;
+
+const storage = multer.diskStorage({
+  destination: function (req, file, callback) {
+    callback(null, DIR );
+  },
+  filename: function (req, file, cb) {
+    cb(null, "KEEPET" + new Date().toISOString().replace(/:/g, '-') + file.originalname );
+  }
+});
+
+const upload = multer({storage : storage})
 
 var bodyParser = require('body-parser');
 
 app.use(bodyParser.json()); // support json encoded bodies
-app.use(bodyParser.urlencoded({ extended: false })); // support encoded bodies
+// app.use(bodyParser.urlencoded({ extended: false })); // support encoded bodies
+
 
 
 //create connection
@@ -30,6 +44,7 @@ db.connect((err) => {
     throw err ;
   console.log( 'mysql connected ... ')
 });
+
 
 
 app.post('/auth/login', function(request, response) {
@@ -50,6 +65,7 @@ app.post('/auth/login', function(request, response) {
 		response.end();
 	}
 });
+
 
 
 app.post("/auth/register", function (req, res) {
@@ -75,29 +91,69 @@ app.post("/auth/register", function (req, res) {
 
 
 
-app.post("/pet/create",  function (req, res) {
-  
+app.post("/pet/create", upload.single('image') , function (req, res) {
+
     if( !req.body )
       return res.sendStatus(400);
 
-  let sql = "INSERT INTO pet (name, age , breed , type , gender , seller , description , vaccination  ) VALUES (" ;
-  sql = sql + "'" + req.body.name + "'," + req.body.age + ",'" + req.body.breed + "','" + req.body.type + "','" + req.body.gender + "','" + "moussa"  + "','" +  req.body.description  + "'," +  req.body.vaccination + ")";
-  let query = db.query(sql, function (err, result) {
-    if (err) {
-      console.log(err);
-      res.send(err);
-      throw err;
-    }
-    else{
-      res.send(result);
-      console.log("pet inserted sucessfully")
-    };
-  });
+
+    console.log( req.file ) ;
+
+    let sql = "INSERT INTO pet (name, age , breed , type , gender , seller , description , vaccination , city , area , adopted , image  ) VALUES (" ;
+    sql = sql + "'" + req.body.name + "'," + req.body.age + ",'" + req.body.breed + "','" + req.body.type + "','" + req.body.gender + "','" + "moussa"  + "','" +  req.body.description  + "'," +  req.body.vaccination + ",'" + req.body.city +"','" + req.body.area + "'," + 0 + ",'" + DIR + "/" + req.file.originalname +"')";
+    let query = db.query(sql, function (err, result) {
+        if (err) {
+        console.log(err);
+        res.send(err);
+        throw err;
+        }
+        else{
+        res.send(result);
+        console.log("pet inserted sucessfully")
+        };
+    });
 });
 
 
-app.get("/pet/get", function (req, res) {
+
+app.get("/pet/get/nonadopted", function (req, res) { 
+    if( !req.body )
+        return res.sendStatus(400);
   
+    let sql = "SELECT * FROM pet WHERE adopted = 0" ;
+    let query = db.query(sql, function (err, result) {
+      if (err) {
+        console.log(err);
+        throw err;
+      }
+      else{
+        res.send(result);
+        console.log("returned 1 row");
+      };
+    });
+});
+
+
+
+app.get("/pet/get/adopted", function (req, res) { 
+    if( !req.body )
+        return res.sendStatus(400);
+  
+    let sql = "SELECT * FROM pet WHERE adopted = 1" ;
+    let query = db.query(sql, function (err, result) {
+      if (err) {
+        console.log(err);
+        throw err;
+      }
+      else{
+        res.send(result);
+        console.log("returned 1 row");
+      };
+    });
+});
+   
+
+app.get("/pet/get/byId", function (req, res) { 
   if( !req.body )
       return res.sendStatus(400);
 
@@ -115,21 +171,8 @@ app.get("/pet/get", function (req, res) {
   });
 });
  
-// app.get("/sentSMS", function (req, res) {
-//   // q = url.parse(req.url, true).query;
-//   let sql = "UPDATE sms SET sent = 1 WHERE id =" ;
-//   sql = sql + req.query.id ;
-//   let query = db.query(sql, function (err, result) {
-//     if (err) {
-//       console.log(err);
-//       throw err;
-//     }
-//     else{
-//       res.send(result);
-//       console.log("1 record changed")
-//     };
-//   });
-// });
+
+
 
 app.get('/', (req, res) => {
   res.send('Hello World!')
