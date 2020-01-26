@@ -15,6 +15,12 @@ const DIR = 'uploads' ;
 const jwt = require('jsonwebtoken');
 const CheckAuth = require('./middleware/check-auth') ;
 
+
+//socket IO
+const http = require('http');
+const server = http.createServer(app) ;
+const io = require('socket.io').listen(server);
+
 const storage = multer.diskStorage({
   destination: function (req, file, callback) {
     callback(null, DIR );
@@ -129,8 +135,9 @@ app.post("/auth/login",  function (req, res) {
   });
 });
 
+// CheckAuth ,
 
-app.post("/user/update", upload.single('image') , function (req, res) {
+app.post("/user/update", upload.single('image') ,  function (req, res) {
 
   if( !req.body )
     return res.sendStatus(400);
@@ -156,8 +163,10 @@ app.post("/user/update", upload.single('image') , function (req, res) {
 });
 
 // CheckAuth ,
+// upload.single('image') , 
+// DIR + "/" + req.file.originalname
 
-app.post("/pet/create",  upload.single('image') , CheckAuth , function (req, res) {
+app.post("/pet/create",   function (req, res) {
 
     if( !req.body )
       return res.sendStatus(400);
@@ -167,7 +176,7 @@ app.post("/pet/create",  upload.single('image') , CheckAuth , function (req, res
     console.log( req.body ) ;
 
     let sql = "INSERT INTO pet (name, age , breed , type , gender , seller , description , vaccination , city , area , adopted , image  ) VALUES (" ;
-    sql = sql + "'" + req.body.name + "'," + req.body.age + ",'" + req.body.breed + "','" + req.body.type + "','" + req.body.gender + "','" + "moussa"  + "','" +  req.body.description  + "'," +  req.body.vaccination + ",'" + req.body.city +"','" + req.body.area + "'," + 0 + ",'" + DIR + "/" + req.file.originalname +"')";
+    sql = sql + "'" + req.body.name + "'," + req.body.age + ",'" + req.body.breed + "','" + req.body.type + "','" + req.body.gender + "','" + "moussa"  + "','" +  req.body.description  + "'," +  req.body.vaccination + ",'" + req.body.city +"','" + req.body.area + "'," + 0 + ",'" + req.body.image  +"')";
     let query = db.query(sql, function (err, result) {
         if (err) {
         console.log(err);
@@ -181,8 +190,6 @@ app.post("/pet/create",  upload.single('image') , CheckAuth , function (req, res
         };
     });
 });
-
-
 
 
 
