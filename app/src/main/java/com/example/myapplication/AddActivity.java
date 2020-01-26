@@ -1,10 +1,14 @@
 package com.example.myapplication;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,6 +16,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.Toast;
@@ -24,6 +29,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -40,6 +46,14 @@ public class AddActivity extends AppCompatActivity {
 
     private EditText description;
     private ImageButton postButton;
+
+    private ImageView uploadImage;
+    private ImageButton uploadButton;
+    private ImageButton resetButton;
+    private final int IMG_REQUEST= 1;
+    private Bitmap bitmap;
+
+
 
     private ArrayAdapter<CharSequence> adapter;
     private ArrayAdapter<CharSequence> adapter2;
@@ -65,6 +79,8 @@ public class AddActivity extends AppCompatActivity {
         });
 
 
+        handleUpload();
+
         bottomNav();
 
 
@@ -80,6 +96,9 @@ public class AddActivity extends AppCompatActivity {
         vacSwitch = (Switch)findViewById(R.id.vaccinated);
         description = (EditText)findViewById(R.id.description_edit);
         postButton = (ImageButton)findViewById(R.id.postButton);
+        uploadButton =(ImageButton)findViewById(R.id.uploadButton);
+        resetButton =(ImageButton)findViewById(R.id.resetButton);
+        uploadImage = (ImageView)findViewById(R.id.imageUpload);
         name = (EditText)findViewById(R.id.nameEdit);
         age = (EditText)findViewById(R.id.dateEdit);
 
@@ -215,7 +234,7 @@ public class AddActivity extends AppCompatActivity {
 
     public void sendPostRequest() {
 
-        String URL_BASE = "http://localhost:3000";
+        String URL_BASE = "http://513a90f3.ngrok.io";
         String URL= URL_BASE + "/pet/create";
 
         final RequestQueue requestQueue = Volley.newRequestQueue(AddActivity.this);
@@ -245,6 +264,8 @@ public class AddActivity extends AppCompatActivity {
                 params.put("age",age.getText().toString());
                 params.put("type",typeSpin.getSelectedItem().toString());
                 params.put("breed",breedSpin.getSelectedItem().toString());
+                params.put("city",citySpin.getSelectedItem().toString());
+                params.put("area",areaSpin.getSelectedItem().toString());
 
                 if(genderSpin.getSelectedItem().toString().equals("Male")) params.put("gender",String.valueOf('m'));
                 else params.put("gender",String.valueOf('f'));
@@ -264,5 +285,49 @@ public class AddActivity extends AppCompatActivity {
 
     }
 
+    public void handleUpload() {
 
+        uploadButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switch (v.getId()) {
+                    case R.id.uploadButton: {
+                        selectImage();
+                    }
+                    break;
+                    case R.id.resetButton: {
+
+                    }
+                    break;
+                }
+            }
+        });
+    }
+
+    public void selectImage() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(intent,IMG_REQUEST);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == IMG_REQUEST && resultCode == RESULT_OK && data != null) {
+
+            Uri path = data.getData();
+            try {
+                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(),path);
+                uploadImage.setImageBitmap(bitmap);
+                uploadImage.setVisibility(View.VISIBLE);
+
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+
+        }
+    }
 }

@@ -27,14 +27,21 @@ import org.json.JSONObject;
 public class PetViewActivity extends AppCompatActivity {
 
     private TextView petInfo;
+    private TextView petInfo2;
     private String Type;
     private String Breed;
     private String Gender;
+    private String City;
+    private String Area;
     private String Name;
     private String Age;
     private String Vac;
     private String Desc;
     private Integer ID;
+
+    private TextView Adoption;
+    private ImageView AdoptionPic;
+
     private FloatingActionButton messageButton;
     private ImageView imageView;
     private int imageID;
@@ -46,13 +53,17 @@ public class PetViewActivity extends AppCompatActivity {
         setContentView(R.layout.activity_pet_view);
 
         petInfo=(TextView)findViewById(R.id.petInfo) ;
+        petInfo2=(TextView)findViewById(R.id.petInfo2) ;
 
         Intent intent = getIntent();
 
-        ID = intent.getIntExtra("ID",0);
+        ID = intent.getIntExtra("ID",4);
 
         imageView = (ImageView)findViewById(R.id.image);
         messageButton = (FloatingActionButton)findViewById(R.id.fab) ;
+        Adoption = (TextView)findViewById(R.id.adoption_title);
+        AdoptionPic = (ImageView)findViewById(R.id.adoption_image);
+
 
         imageID = intent.getIntExtra("Image",R.drawable.default_upload);
 
@@ -111,8 +122,8 @@ public class PetViewActivity extends AppCompatActivity {
 
     public void getPetRequest() {
 
-        String URL_BASE = "http://localhost:3000";
-        String URL = URL_BASE + "/pet/get?id=" + ID;
+        String URL_BASE = "http://513a90f3.ngrok.io";
+        String URL = URL_BASE + "/pet/get/byId?id=" + ID;
 
         final RequestQueue requestQueue = Volley.newRequestQueue(PetViewActivity.this);
 
@@ -136,16 +147,32 @@ public class PetViewActivity extends AppCompatActivity {
 
                                 Name = item.getString("name");
                                 Age = item.getString("age");
+                                City = item.getString("city");
+                                Area = item.getString("area");
 
                                 if(item.getInt("vaccination") == 0) Vac = "No";
                                 else Vac = "Yes";
 
+
+                                if(item.getInt("adopted") == 0) {
+                                    Adoption.setText("Up for adoption!");
+                                    AdoptionPic.setImageResource(R.drawable.foradoption);
+                                }
+                                else {
+                                    Adoption.setText("Got Adopted!");
+                                    AdoptionPic.setImageResource(R.drawable.adopted);
+                                }
+
                                 Desc = item.getString("description");
 
-                                String pet_i= "Name: " + Name + "\nBirthdate: " + Age + "\nType: " + Type + "\nBreed" + Breed + "\nGender: " + Gender
-                                        + "\nVaccinated: " + Vac + "\nDescription: " + Desc;
+                                String pet_i= "Name: " + Name + "\nBirthdate: " + Age + "\nCity: " + City + "\nArea: " + Area + "\nVaccinated: " + Vac;
 
                                 petInfo.setText(pet_i);
+
+                                String pet_i2 = "Type: " + Type + "\nBreed: " + Breed + "\nGender: " + Gender
+                                         + "\nDescription: " + Desc;
+
+                                petInfo2.setText(pet_i2);
 
                             } catch (JSONException e) {
                                 Log.e("Exception", "unexpected JSON exception in request 1", e);
