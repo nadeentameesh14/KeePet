@@ -6,9 +6,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Base64;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,6 +31,8 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -266,6 +270,7 @@ public class AddActivity extends AppCompatActivity {
                 params.put("breed",breedSpin.getSelectedItem().toString());
                 params.put("city",citySpin.getSelectedItem().toString());
                 params.put("area",areaSpin.getSelectedItem().toString());
+                params.put("image",imageToString(bitmap));
 
                 if(genderSpin.getSelectedItem().toString().equals("Male")) params.put("gender",String.valueOf('m'));
                 else params.put("gender",String.valueOf('f'));
@@ -295,8 +300,17 @@ public class AddActivity extends AppCompatActivity {
                         selectImage();
                     }
                     break;
-                    case R.id.resetButton: {
+                }
+            }
+        });
 
+        resetButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switch(v.getId()) {
+                    case R.id.resetButton: {
+                        Bitmap mIcon = BitmapFactory.decodeResource(getApplicationContext().getResources(),R.drawable.user_profile);
+                        uploadImage.setImageBitmap(mIcon);
                     }
                     break;
                 }
@@ -329,5 +343,12 @@ public class AddActivity extends AppCompatActivity {
 
 
         }
+    }
+
+    public String imageToString(Bitmap bitmap) {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG,100,byteArrayOutputStream);
+        byte[] imgBytes = byteArrayOutputStream.toByteArray();
+        return Base64.encodeToString(imgBytes, Base64.DEFAULT);
     }
 }
