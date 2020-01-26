@@ -13,6 +13,7 @@ const multer = require('multer');
 const bcrypt = require('bcrypt');
 const DIR = 'uploads' ;
 const jwt = require('jsonwebtoken');
+const CheckAuth = require('./middleware/check-auth') ;
 
 const storage = multer.diskStorage({
   destination: function (req, file, callback) {
@@ -109,7 +110,6 @@ app.post("/auth/login",  function (req, res) {
             expiresIn: "1hr"
           }
         );
-
           console.log("Correct Credentials !")
           return res.status(200).json({
             message: "Auth Succesfull" ,
@@ -135,10 +135,9 @@ app.post("/user/update", upload.single('image') , function (req, res) {
   if( !req.body )
     return res.sendStatus(400);
 
-
   console.log( req.file ) ;
+
   var hashedPassword = bcrypt.hashSync(req.body.password, 10);
-  
   let sql = "UPDATE user SET email = " + req.body.email  + ", first = " + req.body.first + ", last = " + req.body.last +", password = " + hashedPassword + ", phone = " +  req.body.phone ;
   sql = sql + " WHERE email = " + req.body.email ;
 
@@ -156,13 +155,16 @@ app.post("/user/update", upload.single('image') , function (req, res) {
 
 });
 
-app.post("/pet/create", upload.single('image') , function (req, res) {
+// CheckAuth ,
+
+app.post("/pet/create",  upload.single('image') , CheckAuth , function (req, res) {
 
     if( !req.body )
       return res.sendStatus(400);
 
 
-    console.log( req.file ) ;
+    // console.log( req.file ) ;
+    console.log( req.body ) ;
 
     let sql = "INSERT INTO pet (name, age , breed , type , gender , seller , description , vaccination , city , area , adopted , image  ) VALUES (" ;
     sql = sql + "'" + req.body.name + "'," + req.body.age + ",'" + req.body.breed + "','" + req.body.type + "','" + req.body.gender + "','" + "moussa"  + "','" +  req.body.description  + "'," +  req.body.vaccination + ",'" + req.body.city +"','" + req.body.area + "'," + 0 + ",'" + DIR + "/" + req.file.originalname +"')";
