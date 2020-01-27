@@ -14,6 +14,6 @@
         android:title="Filter by area">
     </item>
     <item android:id="@+id/no_filter"
-        android:title="Filter by area">
+        android:title="No filter">
     </item>
 </menu>
