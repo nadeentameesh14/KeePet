@@ -191,7 +191,7 @@ app.post("/pet/create", CheckAuth  , function (req, res) {
     console.log( req.body ) ;
 
     let sql = "INSERT INTO pet (name, age , breed , type , gender , seller , description , vaccination , city , area , adopted , image  ) VALUES (" ;
-    sql = sql + "'" + req.body.name + "'," + req.body.age + ",'" + req.body.breed + "','" + req.body.type + "','" + req.body.gender + "','" + "moussa"  + "','" +  req.body.description  + "'," +  req.body.vaccination + ",'" + req.body.city +"','" + req.body.area + "'," + 0 + ",'" + req.body.image  +"')";
+    sql = sql + "'" + req.body.name + "'," + req.body.age + ",'" + req.body.breed + "','" + req.body.type + "','" + req.body.gender + "','" + req.userData.email  + "','" +  req.body.description  + "'," +  req.body.vaccination + ",'" + req.body.city +"','" + req.body.area + "'," + 0 + ",'" + req.body.image  +"')";
     let query = db.query(sql, function (err, result) {
         if (err) {
         console.log(err);
@@ -256,11 +256,9 @@ app.get("/user/getlikes", function (req, res) {
     else{
 
       let sql = "SELECT * FROM pet WHERE id = " + result.id ;
-      let query = db.query(sql, function (error, resultt) {
-    
+      let query = db.query(sql, function (error, resultt) {   
         res.send(result);
-        console.log("returned the like histor for : " + req.userData.email );
-    
+        console.log("returned the like histor for : " + req.userData.email );  
       });
     }
   });
