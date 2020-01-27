@@ -143,6 +143,7 @@ app.post("/auth/login",  function (req, res) {
     console.log(req.body.image) ;
 
     var base64Str =  req.body.image ;
+    var base64Str = "data:image/png;base64," + base64Str ;
     var path = "./uploads" ;
     var optionalObj = {'fileName': 'myfilename', 'type':'png'};
     var imageInfo = base64ToImage(base64Str,path,optionalObj); 
