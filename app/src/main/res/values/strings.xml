@@ -45,6 +45,25 @@
         <item>Other</item>
     </string-array>
 
+    <string-array name="all_breeds">
+        <item>Himalayan</item>
+        <item>Persian</item>
+        <item>Siamese</item>
+        <item>Siberian</item>
+        <item>Shorthair</item>
+        <item>Sphynx</item>
+        <item>Beagle</item>
+        <item>BullDog</item>
+        <item>Chihuahua</item>
+        <item>German Shepard</item>
+        <item>Golden Retriever</item>
+        <item>Husky</item>
+        <item>Pomeranian</item>m
+        <item>Poodle</item>
+        <item>Pug</item>
+        <item>Other</item>
+    </string-array>
+
     <string-array name="cities">
         <item>Cairo</item>
         <item>Alexandria</item>

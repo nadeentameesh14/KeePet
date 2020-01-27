@@ -11,6 +11,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Base64;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -31,6 +32,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -129,6 +131,7 @@ public class EditProfileActivity extends AppCompatActivity {
         startActivityForResult(intent,IMG_REQUEST);
     }
 
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -185,7 +188,7 @@ public class EditProfileActivity extends AppCompatActivity {
 
     public void getUserRequest() {
 
-        String URL_BASE = "http://d3bc1802.ngrok.io";
+        String URL_BASE = "http://124ed2a8.ngrok.io";
         String URL = URL_BASE + "/getuser";
 
         final RequestQueue requestQueue = Volley.newRequestQueue(EditProfileActivity.this);
@@ -219,8 +222,9 @@ public class EditProfileActivity extends AppCompatActivity {
                             Log.i("Username", username);
                             Log.i("bio", bio);
 
-                            UsernameEdit.setHint(username);
-
+                            UsernameEdit.setText(username);
+                            NameEdit.setText(name);
+                            BioEdit.setText(bio);
 
 
                         } catch (JSONException e) {
@@ -266,7 +270,7 @@ public class EditProfileActivity extends AppCompatActivity {
 
     public void updatePostRequest() {
 
-        String URL_BASE = "http://d3bc1802.ngrok.io";
+        String URL_BASE = "http://124ed2a8.ngrok.io";
         String URL= URL_BASE + "/user/update";
 
         final RequestQueue requestQueue = Volley.newRequestQueue(EditProfileActivity.this);
@@ -295,6 +299,7 @@ public class EditProfileActivity extends AppCompatActivity {
                 params.put("name",NameEdit.getText().toString());
                 params.put("email",UsernameEdit.getText().toString());
                 params.put("bio",BioEdit.getText().toString());
+                params.put("image",imageToString(bitmap));
 
 
                 return params;
@@ -314,7 +319,14 @@ public class EditProfileActivity extends AppCompatActivity {
         };
 
         requestQueue.add(stringRequest);
+    }
 
-
+    public String imageToString(Bitmap bitmap) {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+        byte[] byteArray = byteArrayOutputStream .toByteArray();
+        String final_string = Base64.encodeToString(byteArray, Base64.DEFAULT);
+        Log.i("Image",final_string);
+        return final_string;
     }
 }

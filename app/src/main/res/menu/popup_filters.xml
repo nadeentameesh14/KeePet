@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/filter_type"
+        android:title="Filter by type">
+    </item>
+    <item android:id="@+id/filter_breed"
+        android:title="Filter by breed">
+    </item>
+    <item android:id="@+id/filter_city"
+        android:title="Filter by city">
+    </item>
+    <item android:id="@+id/filter_area"
+        android:title="Filter by area">
+    </item>
+    <item android:id="@+id/no_filter"
+        android:title="No filter">
+    </item>
+</menu>

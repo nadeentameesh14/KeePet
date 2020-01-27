@@ -1,10 +1,12 @@
 package com.example.myapplication;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -37,6 +39,7 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.PopupMenu;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -63,10 +66,17 @@ public class MainActivity extends AppCompatActivity {
     private SwipeFlingAdapterView flingContainer;
     private ImageButton filterButton;
 
-    private ListView listView;
     private List<Card> list;
+    private String [] filter_options;
 
     private TextView noPosts;
+    private int filterType; //0 no filter, 1 type, 2 breed, 3 city, 4 area
+
+    String breed_filtered;
+    String type_filtered;
+    String city_filtered;
+    String area_filtered;
+
 
     int [] images = {R.drawable.doggo2,R.drawable.kitty2,R.drawable.doggo3,R.drawable.kitty3,R.drawable.doggo4,
             R.drawable.kitty4,R.drawable.paws,R.drawable.paws,R.drawable.pupper,R.drawable.kitty,R.drawable.doggo2,R.drawable.kitty2,R.drawable.doggo3,R.drawable.kitty3,R.drawable.doggo4,
@@ -86,17 +96,24 @@ public class MainActivity extends AppCompatActivity {
 
         flingContainer = (SwipeFlingAdapterView) findViewById(R.id.frame);
         filterButton = (ImageButton)findViewById(R.id.filterButton);
-
-        filterButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(MainActivity.this,FilterActivity.class);
-                startActivity(i);
-            }
-        });
         //dummyData();
 
-        getAllNonAdoptedPetsRequest();
+        if(filterType == 0) {
+            getAllNonAdoptedPetsRequest();
+        }
+        else if (filterType == 1) {
+            getAllNonAdoptedPetsRequest();
+        }
+        else if (filterType == 2) {
+            getAllNonAdoptedPetsRequest();
+        }
+        else if (filterType == 3) {
+            getAllNonAdoptedPetsRequest();
+        }
+        else if (filterType == 4) {
+            getAllNonAdoptedPetsRequest();
+        }
+
 
 
         flingContainer.setFlingListener(new SwipeFlingAdapterView.onFlingListener() {
@@ -148,6 +165,7 @@ public class MainActivity extends AppCompatActivity {
 
 
             }
+
             @Override
 
             public void onScroll(float scrollProgressPercent) {
@@ -169,7 +187,9 @@ public class MainActivity extends AppCompatActivity {
 
                 Intent intent = new Intent(MainActivity.this, PetViewActivity.class);
 
+                Log.i("Item Position", String.valueOf(itemPosition));
                 intent.putExtra("ID", list.get(itemPosition).getID());
+
 
                 startActivity(intent);
 
@@ -338,6 +358,7 @@ public class MainActivity extends AppCompatActivity {
         return BitmapFactory.decodeByteArray(imageAsBytes, 0, imageAsBytes.length);
     }
 
+
     public void addToLikes(final String username, final int petID){
 
         String URL_BASE = "http://124ed2a8.ngrok.io";
@@ -402,8 +423,126 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void showPopup(View view) {
+        PopupMenu popupMenu = new PopupMenu(this, view);
+        popupMenu.inflate(R.menu.popup_filters);
+        popupMenu.show();
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.filter_type: {
+                        Toast.makeText( MainActivity.this, "Type", Toast.LENGTH_LONG).show();
+                        filterType = 1;
+                        Log.i("Filter Type",String.valueOf(filterType));
+                        getAndroidBuilder(filter_options,"Filter by type",1);
+                        return true;
+                    }
+                    case R.id.filter_breed: {
+                        Toast.makeText( MainActivity.this, "Breed", Toast.LENGTH_LONG).show();
+                        filterType = 2;
+                        Log.i("Filter Type",String.valueOf(filterType));
+                        getAndroidBuilder(filter_options,"Filter by breed",2);
+                        return true;
+                    }
+                    case R.id.filter_city: {
+                        Toast.makeText( MainActivity.this, "City", Toast.LENGTH_LONG).show();
+                        filterType = 3;
+                        Log.i("Filter Type",String.valueOf(filterType));
+                        getAndroidBuilder(filter_options,"Filter by city",3);
+                        return true;
+                    }
+                    case R.id.filter_area: {
+                        Toast.makeText( MainActivity.this, "Area", Toast.LENGTH_LONG).show();
+                        filterType = 4;
+                        Log.i("Filter Type",String.valueOf(filterType));
+                        getAndroidBuilder(filter_options,"Filter by area",4);
+                        return true;
+                    }
+                    case R.id.no_filter: {
+                        filterType = 0;
+                        Log.i("Filter Type",String.valueOf(filterType));
+                        return true;
+                    }
+
+                }
+
+                return false;
+            }
+        });
+
     }
 
 
+    public void getAndroidBuilder (String[] options, String title, final int type) {
+
+        switch (type) {
+            case 1: {
+                options = getResources().getStringArray(R.array.pet_types);
+            }
+            break;
+            case 2: {
+                options = getResources().getStringArray(R.array.all_breeds);
+            }
+            break;
+            case 3: {
+                options = getResources().getStringArray(R.array.cities);
+            }
+            break;
+            case 4: {
+                options = getResources().getStringArray(R.array.cairo_areas);
+            }
+            break;
+        }
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        builder.setTitle(title);
+        builder.setIcon(R.drawable.filter_icon);
+        final String[] finalOptions = options;
+        builder.setSingleChoiceItems(options, -1, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (type) {
+                    case 1: {
+                        type_filtered = finalOptions[which];
+                        Log.i("Type filtered", type_filtered);
+                    }
+                    break;
+                    case 2: {
+                        breed_filtered = finalOptions[which];
+                        Log.i("Breed filtered", breed_filtered);
+                    }
+                    break;
+                    case 3: {
+                        city_filtered = finalOptions[which];
+                        Log.i("City filtered", city_filtered);
+                    }
+                    break;
+                    case 4: {
+                        area_filtered = finalOptions[which];
+                        Log.i("Area filtered", area_filtered);
+                    }
+                    break;
+                }
+
+            }
+        });
+        builder.setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
 
 
+
+    }

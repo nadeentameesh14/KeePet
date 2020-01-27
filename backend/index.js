@@ -15,6 +15,10 @@ const DIR = 'uploads' ;
 const jwt = require('jsonwebtoken');
 const CheckAuth = require('./middleware/check-auth') ;
 
+
+const base64ToImage = require('base64-to-image');
+
+
 const storage = multer.diskStorage({
   destination: function (req, file, callback) {
     callback(null, DIR );
@@ -48,7 +52,6 @@ db.connect((err) => {
 });
 
 
-
 app.post("/auth/register",  function (req, res) {
 
     let sql = "SELECT * FROM user where email = " ;
@@ -63,8 +66,8 @@ app.post("/auth/register",  function (req, res) {
         if( resultt.length < 1 ) {
           var hashedPassword = bcrypt.hashSync(req.body.password, 10);
 
-          let sql = "INSERT INTO user (email , first , last , password , phone ) VALUES (" ;
-          sql = sql + "'" + req.body.email + "','" + req.body.first + "','" + req.body.last + "','" + hashedPassword + "'," + req.body.phone +  ")";    
+          let sql = "INSERT INTO user (email , password  ) VALUES (" ;
+          sql = sql + "'" + req.body.email + "','" + hashedPassword + "'" + ")";    
           let query = db.query(sql, function (err, result) {
             if (err) {
               console.log(err);
@@ -90,6 +93,7 @@ app.post("/auth/register",  function (req, res) {
 app.post("/auth/login",  function (req, res) {
   let sql = "SELECT * FROM user where email = " ;
   sql = sql + "'" + req.body.email + "'" ;
+  console.log(req.body);
   let query = db.query ( sql , function (err, result){
     
     if (err) {
@@ -111,10 +115,8 @@ app.post("/auth/login",  function (req, res) {
           }
         );
           console.log("Correct Credentials !")
-          return res.status(200).json({
-            message: "Auth Succesfull" ,
-            token : token 
-          })
+          return res.status(200).send(token);
+
         } else {
           console.log('Incorrect password !')
           res.send('Incorrect password !')
@@ -125,49 +127,85 @@ app.post("/auth/login",  function (req, res) {
         console.log('Email not found !')
         res.send('Email not found !') ;
       } 
-    }    
+    }
+
   });
 });
 
 
-app.post("/user/update", upload.single('image') , function (req, res) {
+// upload.single('image') , 
+// DIR + "/" + req.file.originalname
+// , upload.single('image')
 
+  app.post("/user/update", CheckAuth   , function (req, res) {
+    
+    console.log( req.file ) ;
+    console.log(req.body.image) ;
+
+    var base64Str =  req.body.image ;
+    var path = "./uploads" ;
+    var optionalObj = {'fileName': 'myfilename', 'type':'png'};
+    var imageInfo = base64ToImage(base64Str,path,optionalObj); 
+    console.log(imageInfo);
+
+    let sql = "UPDATE user SET email = '" + req.body.email  + "' , bio = '" + req.body.bio + "'" + ", name = '" + req.body.name + "'"  ;
+    sql = sql + " WHERE email = '" + req.body.email + "'";
+  
+    let query = db.query(sql, function (err, result) {
+        if (err) {
+          console.log(err);
+          res.send(err);
+          throw err;
+        }
+        else{
+          // res.send( req.body.image );
+          res.send(result);
+          console.log("update info for user : " + req.body.email )
+        };
+
+    });
+
+});
+
+
+
+
+app.post("/user/like",  CheckAuth  ,  function (req, res) {
+  
   if( !req.body )
     return res.sendStatus(400);
 
-  console.log( req.file ) ;
-
-  var hashedPassword = bcrypt.hashSync(req.body.password, 10);
-  let sql = "UPDATE user SET email = " + req.body.email  + ", first = " + req.body.first + ", last = " + req.body.last +", password = " + hashedPassword + ", phone = " +  req.body.phone ;
-  sql = sql + " WHERE email = " + req.body.email ;
-
-  let query = db.query(sql, function (err, result) {
-      if (err) {
+    let sql = "INSERT INTO likes (email , petid ) VALUES (" ;
+    sql = sql + "'" + req.body.email + "','" + req.body.petid + "')";
+    let query = db.query(sql, function (err, result) {
+        if (err) {
         console.log(err);
         res.send(err);
         throw err;
-      }
-      else{
-        res.send(result);
-        console.log("user data updated successfully ")
-      };
-  });
+        }
+        else{
+          res.send(result);
+          console.log("pet Liked by " + req.body.email)
+        };
+    });
 
 });
 
-// CheckAuth ,
 
-app.post("/pet/create",  upload.single('image') , CheckAuth , function (req, res) {
+// CheckAuth ,
+// upload.single('image') , 
+// DIR + "/" + req.file.originalname
+
+app.post("/pet/create", CheckAuth  , function (req, res) {
 
     if( !req.body )
       return res.sendStatus(400);
-
 
     // console.log( req.file ) ;
     console.log( req.body ) ;
 
     let sql = "INSERT INTO pet (name, age , breed , type , gender , seller , description , vaccination , city , area , adopted , image  ) VALUES (" ;
-    sql = sql + "'" + req.body.name + "'," + req.body.age + ",'" + req.body.breed + "','" + req.body.type + "','" + req.body.gender + "','" + "moussa"  + "','" +  req.body.description  + "'," +  req.body.vaccination + ",'" + req.body.city +"','" + req.body.area + "'," + 0 + ",'" + DIR + "/" + req.file.originalname +"')";
+    sql = sql + "'" + req.body.name + "'," + req.body.age + ",'" + req.body.breed + "','" + req.body.type + "','" + req.body.gender + "','" + req.userData.email  + "','" +  req.body.description  + "'," +  req.body.vaccination + ",'" + req.body.city +"','" + req.body.area + "'," + 0 + ",'" + req.body.image  +"')";
     let query = db.query(sql, function (err, result) {
         if (err) {
         console.log(err);
@@ -180,9 +218,8 @@ app.post("/pet/create",  upload.single('image') , CheckAuth , function (req, res
         console.log(req.body);
         };
     });
+
 });
-
-
 
 
 
@@ -198,11 +235,49 @@ app.get("/pet/get/nonadopted", function (req, res) {
       }
       else{
         res.send(result);
-        console.log("returned 1 row");
+        console.log("returned all pets (non adopted)");
       };
     });
 });
 
+
+app.post("/getUser", CheckAuth  ,  function (req, res) { 
+    let sql = "SELECT * FROM user WHERE email = '"  + req.userData.email + "'";
+    let query = db.query(sql, function (err , result) {
+      if (err) {
+        console.log(err);
+        throw err;
+      }
+      else{
+        res.send(result[0]);
+        console.log(result[0])
+        // console.log("returned user data for : " + req.userData.email );
+      };
+    });
+});
+
+
+app.get("/user/getlikes", function (req, res) { 
+  if( !req.body )
+      return res.sendStatus(400);
+
+  let sql = "SELECT * FROM likes WHERE email = " + req.userData.email ;
+  let query = db.query(sql, function (err, result) {
+    if (err) {
+      console.log(err);
+      throw err;
+    }
+    else{
+
+      let sql = "SELECT * FROM pet WHERE id = " + result.id ;
+      let query = db.query(sql, function (error, resultt) {   
+        res.send(result);
+        console.log("returned the like histor for : " + req.userData.email );  
+      });
+    }
+  });
+});
+ 
 
 
 app.get("/pet/get/adopted", function (req, res) { 
@@ -223,7 +298,6 @@ app.get("/pet/get/adopted", function (req, res) {
 });
    
 
-
 app.get("/pet/get/byId", function (req, res) { 
   if( !req.body )
       return res.sendStatus(400);
@@ -236,14 +310,15 @@ app.get("/pet/get/byId", function (req, res) {
       throw err;
     }
     else{
+
       res.send(result);
-      console.log("returned 1 row");
+      console.log("returned 1 pet by id");
+
     };
   });
+
 });
  
-
-
 
 app.get('/', (req, res) => {
   res.send('Hello World!')
@@ -252,3 +327,5 @@ app.get('/', (req, res) => {
 app.listen( 3000 , () => {
   console.log('Example app listening on port 3000 !')
 });
+
+
