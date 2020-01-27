@@ -1,12 +1,15 @@
 package com.example.myapplication;
 
+import android.graphics.Bitmap;
+
 public class Card {
 
-    public int postID, age, petImage, userImage;
+    public int postID, age;
     public String breed, gender, username;
+    public Bitmap petImage, userImage;
 
 
-    public Card(int postID, String breed, int age, String gender, String username, int petImage, int userImage) {
+    public Card(int postID, String breed, int age, String gender, String username, Bitmap petImage, Bitmap userImage) {
 
         this.postID = postID;
         this.breed = breed;
@@ -33,11 +36,11 @@ public class Card {
         return username;
     }
 
-    public int getPetImage() {
+    public Bitmap getPetImage() {
         return petImage;
     }
 
-    public int getUserImage() {
+    public Bitmap getUserImage() {
         return userImage;
     }
 

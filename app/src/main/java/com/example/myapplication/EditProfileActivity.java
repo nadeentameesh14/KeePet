@@ -5,11 +5,13 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
@@ -31,7 +33,7 @@ public class EditProfileActivity extends AppCompatActivity {
     private ImageButton resetButton;
     private ImageButton saveButton;
     private ImageButton discardButton;
-
+    private SharedPreferences prefs;
     private final int IMG_REQUEST= 2;
     private Bitmap bitmap;
 
@@ -40,6 +42,12 @@ public class EditProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
+
+        prefs = getSharedPreferences("MyPref", MODE_PRIVATE);
+
+        String token= prefs.getString("token", "error");
+
+        Log.i("Key",token);
 
         initialize();
 

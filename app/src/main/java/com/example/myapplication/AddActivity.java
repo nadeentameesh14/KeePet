@@ -238,7 +238,7 @@ public class AddActivity extends AppCompatActivity {
 
     public void sendPostRequest() {
 
-        String URL_BASE = "http://513a90f3.ngrok.io";
+        String URL_BASE = "http://777d33b5.ngrok.io";
         String URL= URL_BASE + "/pet/create";
 
         final RequestQueue requestQueue = Volley.newRequestQueue(AddActivity.this);
@@ -347,8 +347,8 @@ public class AddActivity extends AppCompatActivity {
 
     public String imageToString(Bitmap bitmap) {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG,100,byteArrayOutputStream);
-        byte[] imgBytes = byteArrayOutputStream.toByteArray();
-        return Base64.encodeToString(imgBytes, Base64.DEFAULT);
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+        byte[] byteArray = byteArrayOutputStream .toByteArray();
+        return Base64.encodeToString(byteArray, Base64.DEFAULT);
     }
 }
