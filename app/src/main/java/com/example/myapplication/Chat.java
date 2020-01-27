@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
@@ -35,6 +36,10 @@ public class Chat extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
 
+        Intent i = getIntent();
+
+        String username = i.getStringExtra("user");
+
         layout = (LinearLayout) findViewById(R.id.layout1);
         layout_2 = (RelativeLayout)findViewById(R.id.layout2);
         sendButton = (ImageView)findViewById(R.id.sendButton);
@@ -69,10 +74,10 @@ public class Chat extends AppCompatActivity {
                 String userName = map.get("user").toString();
 
                 if(userName.equals(UserDetails.username)){
-                    addMessageBox("You:-\n" + message, 1);
+                    addMessageBox( message, 1);
                 }
                 else{
-                    addMessageBox(UserDetails.chatWith + ":-\n" + message, 2);
+                    addMessageBox( message, 2);
                 }
             }
 
@@ -107,11 +112,19 @@ public class Chat extends AppCompatActivity {
 
         if(type == 1) {
             lp2.gravity = Gravity.LEFT;
-            textView.setBackgroundResource(R.drawable.away);
+            textView.setBackgroundResource(R.drawable.attempt3);
+            textView.setWidth(100);
+            textView.setHeight(100);
+            textView.setTextSize(25);
+            textView.setTextScaleX(2);
         }
         else{
             lp2.gravity = Gravity.RIGHT;
-            textView.setBackgroundResource(R.drawable.home);
+            textView.setBackgroundResource(R.drawable.attempt4);
+            textView.setWidth(100);
+            textView.setHeight(100);
+            textView.setTextSize(25);
+            textView.setTextScaleX(2);
         }
         textView.setLayoutParams(lp2);
         layout.addView(textView);

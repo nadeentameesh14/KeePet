@@ -26,6 +26,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -85,13 +86,18 @@ public class PetViewActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent messageIntent = new Intent(PetViewActivity.this, Chat.class);
 
-                String username;
+                messageIntent.putExtra("user", Username);
 
-                username = getPetOwner(ID);
+                //String username;
 
-                //Log.d("owner", username);
+                //username = getPetOwner(ID);
 
-                UserDetails.chatWith = username;
+                Log.d("owner", Username);
+
+                UserDetails.chatWith = Username;
+
+                UserDetails.chat_users.add(Username);
+                UserDetails.chat_users.add(UserDetails.username);
 
                startActivity(messageIntent);
             }

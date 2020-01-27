@@ -34,7 +34,7 @@ public class Users extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user);
+        setContentView(R.layout.activity_users);
 
         Intent intent = getIntent();
 
@@ -62,13 +62,7 @@ public class Users extends AppCompatActivity {
         RequestQueue rQueue = Volley.newRequestQueue(Users.this);
         rQueue.add(request);
 
-        usersList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                UserDetails.chatWith = al.get(position);
-                startActivity(new Intent(Users.this, Chat.class));
-            }
-        });
+
     }
 
     public void doOnSuccess(String s){
@@ -81,7 +75,7 @@ public class Users extends AppCompatActivity {
             while(i.hasNext()){
                 key = i.next().toString();
 
-                if(!key.equals(UserDetails.username)) {
+                if(UserDetails.chat_users.contains(key)) {
                     al.add(key);
                 }
 
@@ -100,6 +94,13 @@ public class Users extends AppCompatActivity {
             noUsersText.setVisibility(View.GONE);
             usersList.setVisibility(View.VISIBLE);
             usersList.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, al));
+            usersList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    UserDetails.chatWith = al.get(position);
+                    startActivity(new Intent(Users.this, Chat.class));
+                }
+            });
         }
 
         pd.dismiss();
