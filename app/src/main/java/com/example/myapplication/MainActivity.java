@@ -6,7 +6,10 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Base64;
 import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -76,11 +79,6 @@ public class MainActivity extends AppCompatActivity {
 
         getAllNonAdoptedPetsRequest();
 
-        if(list.size() < 1) {
-            noPosts = (TextView)findViewById(R.id.noposts);
-            noPosts.setVisibility(View.VISIBLE);
-
-        }
 
         flingContainer.setFlingListener(new SwipeFlingAdapterView.onFlingListener() {
 
@@ -187,7 +185,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void getAllNonAdoptedPetsRequest() {
 
-        String URL_BASE = "http://00559c5e.ngrok.io";
+        String URL_BASE = "http://777d33b5.ngrok.io";
         String URL = URL_BASE + "/pet/get/nonadopted";
 
 
@@ -223,7 +221,12 @@ public class MainActivity extends AppCompatActivity {
 
                                 String item_username = item.getString("seller");
 
-                                Card card = new Card(id,item_breed,item_age,item_gender,item_username,images[id],R.drawable.user_profile);
+                                String img_string = item.getString("image");
+
+                                Bitmap img = stomap(img_string);
+                                Log.i("Image:",img_string);
+
+                                Card card = new Card(id,item_breed,item_age,item_gender,item_username,img,img);
 
                                 list.add(card);
                                 //arrayAdapter.notifyDataSetChanged();
@@ -238,6 +241,11 @@ public class MainActivity extends AppCompatActivity {
                         flingContainer.setAdapter(arrayAdapter);
                         arrayAdapter.notifyDataSetChanged();
                         Log.i( " THE SIZE OF THE LIST IS FINALYYYYYY: " ,  String.valueOf(list.size()));
+                        if(list.size() < 1) {
+                            noPosts = (TextView)findViewById(R.id.noposts);
+                            noPosts.setVisibility(View.VISIBLE);
+
+                        }
 
                     }
 
@@ -292,20 +300,10 @@ public class MainActivity extends AppCompatActivity {
         return age;
     }
 
-    private void dummyData() {
+    public Bitmap stomap(String encodedString){
 
-        Card card1 = new Card(1,"fml",2,"fml","fml", images[1],R.drawable.user_profile);
-        Card card2 = new Card(1,"fml",2,"fml","fml", images[1],R.drawable.user_profile);
-        Card card3 = new Card(1,"fml",2,"fml","fml", images[1],R.drawable.user_profile);
-        Card card4 = new Card(1,"fml",2,"fml","fml", images[1],R.drawable.user_profile);
-
-        list.add(card1);
-        list.add(card2);
-        list.add(card3);
-        list.add(card4);
-
-        arrayAdapter = new CustomAdapter( this, R.layout.swipecard, list );
-        flingContainer.setAdapter(arrayAdapter);
+        byte[] imageAsBytes = Base64.decode(encodedString.getBytes(), Base64.DEFAULT);
+        return BitmapFactory.decodeByteArray(imageAsBytes, 0, imageAsBytes.length);
     }
 
 

@@ -2,17 +2,21 @@ package com.example.myapplication;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
@@ -20,6 +24,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class Login extends AppCompatActivity {
     TextView registerUser;
@@ -50,6 +57,8 @@ public class Login extends AppCompatActivity {
                 user = username.getText().toString();
                 pass = password.getText().toString();
 
+                loginPostRequest();
+
                 if(user.equals("")){
                     username.setError("can't be blank");
                 }
@@ -57,6 +66,7 @@ public class Login extends AppCompatActivity {
                     password.setError("can't be blank");
                 }
                 else{
+
                     String url = "https://chat-d2491.firebaseio.com/users.json";
                     final ProgressDialog pd = new ProgressDialog(Login.this);
                     pd.setMessage("Loading...");
@@ -78,6 +88,7 @@ public class Login extends AppCompatActivity {
                                     else if(obj.getJSONObject(user).getString("password").equals(pass)){
                                         UserDetails.username = user;
                                         UserDetails.password = pass;
+
                                         startActivity(new Intent(Login.this, MainActivity.class));
                                     }
                                     else {
@@ -101,9 +112,77 @@ public class Login extends AppCompatActivity {
                     RequestQueue rQueue = Volley.newRequestQueue(Login.this);
                     rQueue.add(request);
 
+
+
                 }
+
+
+
+
 
             }
         });
+    }
+
+    public void loginPostRequest() {
+
+        String URL_BASE = "http://777d33b5.ngrok.io";
+        String URL= URL_BASE + "/auth/login";
+
+        final RequestQueue requestQueue = Volley.newRequestQueue(Login.this);
+
+        JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.POST, URL,null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        System.out.println(response);
+
+
+                        SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
+                        SharedPreferences.Editor editor = pref.edit();
+
+                        try {
+                            editor.putString("token", response.getString("token"));
+                            Log.i("Here", response.getString("token"));
+                            editor.apply();
+
+                        } catch (JSONException e) {
+                            Log.i("EROROROROR", "erororoororor ");
+                            e.printStackTrace();
+                        }
+
+
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                })
+
+        {
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("TOKEN", "99KI9Gj68CgCf70deM22Ka64chef2C40Gm2lFJ2J0G9JkDaaDAcbFfd19MfacGf3FFm8CM1hG0eDiIk8");
+
+                return headers;
+            }
+
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("email",user);
+                params.put("password", pass);
+
+                return params;
+            }
+        };
+
+        requestQueue.add(jsObjRequest);
     }
 }

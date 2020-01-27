@@ -285,7 +285,7 @@
                     <EditText
                         android:id="@+id/nameEdit"
                         android:layout_width="175dp"
-                        android:layout_height="30dp"
+                        android:layout_height="45dp"
                         android:ems="10"
                         android:inputType="textPersonName"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -293,7 +293,7 @@
                         app:layout_constraintHorizontal_bias="0.949"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_bias="0.144" />
+                        app:layout_constraintVertical_bias="0.133" />
 
                     <TextView
                         android:id="@+id/age2"
@@ -307,7 +307,7 @@
                         app:layout_constraintHorizontal_bias="0.615"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_bias="0.104" />
+                        app:layout_constraintVertical_bias="0.092" />
 
                     <EditText
                         android:id="@+id/dateEdit"

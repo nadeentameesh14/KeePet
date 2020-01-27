@@ -54,8 +54,10 @@ public class CustomAdapter extends ArrayAdapter<Card> {
         b.setText(card_item.getGender());
         c.setText(String.valueOf(card_item.getAge()));
         d.setText(card_item.getUsername());
-        img.setImageResource(card_item.getPetImage());
-        circ.setImageResource(card_item.getUserImage());
+        img.setImageBitmap(card_item.getPetImage());
+        img.setVisibility(View.VISIBLE);
+        circ.setImageBitmap(card_item.getUserImage());
+        circ.setVisibility(View.VISIBLE);
 
         Log.i( " INSIDE ADAPTER " ,  "I AM HERE2" );
 
