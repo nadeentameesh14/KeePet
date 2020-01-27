@@ -43,6 +43,7 @@ public class PetViewActivity extends AppCompatActivity {
     private String Vac;
     private String Desc;
     private Integer ID;
+    private String user;
 
     private TextView Adoption;
     private ImageView AdoptionPic;
@@ -57,21 +58,21 @@ public class PetViewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pet_view);
 
-        petInfo=(TextView)findViewById(R.id.petInfo) ;
-        petInfo2=(TextView)findViewById(R.id.petInfo2) ;
+        petInfo = (TextView) findViewById(R.id.petInfo);
+        petInfo2 = (TextView) findViewById(R.id.petInfo2);
 
         Intent intent = getIntent();
 
-        ID = intent.getIntExtra("ID",0);
-        Log.i("ID HERE",String.valueOf(ID));
+        ID = intent.getIntExtra("ID", 0);
+        Log.i("ID HERE", String.valueOf(ID));
 
-        imageView = (ImageView)findViewById(R.id.image);
-        messageButton = (FloatingActionButton)findViewById(R.id.fab) ;
-        Adoption = (TextView)findViewById(R.id.adoption_title);
-        AdoptionPic = (ImageView)findViewById(R.id.adoption_image);
+        imageView = (ImageView) findViewById(R.id.image);
+        messageButton = (FloatingActionButton) findViewById(R.id.fab);
+        Adoption = (TextView) findViewById(R.id.adoption_title);
+        AdoptionPic = (ImageView) findViewById(R.id.adoption_image);
 
 
-        imageID = intent.getIntExtra("Image",R.drawable.default_upload);
+        imageID = intent.getIntExtra("Image", R.drawable.default_upload);
 
         imageView.setImageResource(imageID);
 
@@ -81,7 +82,15 @@ public class PetViewActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent messageIntent = new Intent(PetViewActivity.this, Chat.class);
 
-                startActivity(messageIntent);
+                String username;
+
+                username = getPetOwner(ID);
+
+                Log.d("owner", username);
+
+                //UserDetails.chatWith = username;
+
+               // startActivity(messageIntent);
             }
         });
 
@@ -94,7 +103,7 @@ public class PetViewActivity extends AppCompatActivity {
 
     public void bottomNav() {
 
-        BottomNavigationView bottomNavigationView = (BottomNavigationView)findViewById(R.id.bottom_navigation);
+        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
 
         bottomNavigationView.setSelectedItemId(R.id.nav_add);
 
@@ -104,18 +113,18 @@ public class PetViewActivity extends AppCompatActivity {
 
                 switch (item.getItemId()) {
                     case R.id.nav_add: {
-                        startActivity(new Intent(getApplicationContext(),AddActivity.class));
-                        overridePendingTransition(0,0);
+                        startActivity(new Intent(getApplicationContext(), AddActivity.class));
+                        overridePendingTransition(0, 0);
                         return true;
                     }
                     case R.id.nav_settings: {
                         startActivity(new Intent(getApplicationContext(), UserActivity.class));
-                        overridePendingTransition(0,0);
+                        overridePendingTransition(0, 0);
                         return true;
                     }
                     case R.id.nav_home: {
-                        startActivity(new Intent(getApplicationContext(),MainActivity.class));
-                        overridePendingTransition(0,0);
+                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                        overridePendingTransition(0, 0);
                         return true;
                     }
 
@@ -128,7 +137,7 @@ public class PetViewActivity extends AppCompatActivity {
 
     public void getPetRequest() {
 
-        String URL_BASE = "http://d3bc1802.ngrok.io";
+        String URL_BASE = "http://124ed2a8.ngrok.io";
         String URL = URL_BASE + "/pet/get/byId?id=" + ID;
 
         final RequestQueue requestQueue = Volley.newRequestQueue(PetViewActivity.this);
@@ -148,7 +157,7 @@ public class PetViewActivity extends AppCompatActivity {
                                 Type = item.getString("type");
                                 Breed = item.getString("breed");
 
-                                if(item.getString("gender").equals("m")) Gender = "Male";
+                                if (item.getString("gender").equals("m")) Gender = "Male";
                                 else Gender = "Female";
 
                                 Name = item.getString("name");
@@ -156,27 +165,26 @@ public class PetViewActivity extends AppCompatActivity {
                                 City = item.getString("city");
                                 Area = item.getString("area");
 
-                                if(item.getInt("vaccination") == 0) Vac = "No";
+                                if (item.getInt("vaccination") == 0) Vac = "No";
                                 else Vac = "Yes";
 
 
-                                if(item.getInt("adopted") == 0) {
+                                if (item.getInt("adopted") == 0) {
                                     Adoption.setText("Up for adoption!");
                                     AdoptionPic.setImageResource(R.drawable.foradoption);
-                                }
-                                else {
+                                } else {
                                     Adoption.setText("Got Adopted!");
                                     AdoptionPic.setImageResource(R.drawable.adopted);
                                 }
 
                                 Desc = item.getString("description");
 
-                                String pet_i= "Name: " + Name + "\nBirthdate: " + Age + "\nCity: " + City + "\nArea: " + Area + "\nVaccinated: " + Vac;
+                                String pet_i = "Name: " + Name + "\nBirthdate: " + Age + "\nCity: " + City + "\nArea: " + Area + "\nVaccinated: " + Vac;
 
                                 petInfo.setText(pet_i);
 
                                 String pet_i2 = "Type: " + Type + "\nBreed: " + Breed + "\nGender: " + Gender
-                                         + "\nDescription: " + Desc;
+                                        + "\nDescription: " + Desc;
 
                                 petInfo2.setText(pet_i2);
 
@@ -199,5 +207,87 @@ public class PetViewActivity extends AppCompatActivity {
 
     }
 
+    public String getPetOwner(int petID) {
+        String URL_BASE = "http://124ed2a8.ngrok.io";
+        String URL = URL_BASE + "/pet/get/byId?id=" + petID;
+
+
+        final RequestQueue requestQueue = Volley.newRequestQueue(PetViewActivity.this);
+
+        JsonArrayRequest stringRequest = new JsonArrayRequest(
+                Request.Method.GET,
+                URL,
+                null,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+
+                        Log.d("IdAPIresponse", response.toString());
+                        try {
+                            JSONObject obj = response.getJSONObject(0);
+                            user = obj.getString("seller");
+
+                           // Log.d("owner", user);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                        //parse
+                      /*  for (int i = 0; i < response.length(); i++) {
+                            try {
+                                JSONObject item = response.getJSONObject(i);
+                                Type = item.getString("type");
+                                Breed = item.getString("breed");
+
+                                if (item.getString("gender").equals("m")) Gender = "Male";
+                                else Gender = "Female";
+
+                                Name = item.getString("name");
+                                Age = item.getString("age");
+                                City = item.getString("city");
+                                Area = item.getString("area");
+
+                                if (item.getInt("vaccination") == 0) Vac = "No";
+                                else Vac = "Yes";
+
+
+                                if (item.getInt("adopted") == 0) {
+                                    Adoption.setText("Up for adoption!");
+                                    AdoptionPic.setImageResource(R.drawable.foradoption);
+                                } else {
+                                    Adoption.setText("Got Adopted!");
+                                    AdoptionPic.setImageResource(R.drawable.adopted);
+                                }
+
+                                Desc = item.getString("description");
+
+                                String pet_i = "Name: " + Name + "\nBirthdate: " + Age + "\nCity: " + City + "\nArea: " + Area + "\nVaccinated: " + Vac;
+
+                                petInfo.setText(pet_i);
+
+                                String pet_i2 = "Type: " + Type + "\nBreed: " + Breed + "\nGender: " + Gender
+                                        + "\nDescription: " + Desc;
+
+                                petInfo2.setText(pet_i2);
+
+                            } catch (JSONException e) {
+                                Log.e("Exception", "unexpected JSON exception in request 1", e);
+                            }
+                        }*/
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("RESPONSE IS :", error.toString());
+                    }
+                }
+        );
+
+        // Add the request to the RequestQueue.
+        requestQueue.add(stringRequest);
+
+        return user;
+    }
 
 }

@@ -6,19 +6,26 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.util.Base64;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -44,7 +51,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.zip.Inflater;
 
 public class MainActivity extends AppCompatActivity {
@@ -114,10 +123,23 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
 
-            public void onRightCardExit(Object dataObject) {       //right swipe with pet post
+            public void onRightCardExit( Object dataObject) {       //right swipe with pet post
 
-                Toast.makeText(MainActivity.this, "Right!", Toast.LENGTH_SHORT).show();
+               // Toast.makeText(MainActivity.this, "Added to Likes!", Toast.LENGTH_SHORT).show();
+
+                Intent intent = getIntent();
+
+                String user = intent.getExtras().getString("username");
+
+                int ID = list.get(0).getID();
+
+
+
+                addToLikes(user, ID);
+
             }
+
+
 
             @Override
 
@@ -195,7 +217,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void getAllNonAdoptedPetsRequest() {
 
-        String URL_BASE = "http://d3bc1802.ngrok.io";
+        String URL_BASE = "http://124ed2a8.ngrok.io";
         String URL = URL_BASE + "/pet/get/nonadopted";
 
 
@@ -233,7 +255,7 @@ public class MainActivity extends AppCompatActivity {
 
                                 String img_string = item.getString("image");
 
-                                Bitmap img = stomap(img_string);
+                                Bitmap img = null;//stomap(img_string);
                                 Log.i("Image:",img_string);
 
                                 Card card = new Card(id,item_breed,item_age,item_gender,item_username,img,img);
@@ -316,8 +338,72 @@ public class MainActivity extends AppCompatActivity {
         return BitmapFactory.decodeByteArray(imageAsBytes, 0, imageAsBytes.length);
     }
 
+    public void addToLikes(final String username, final int petID){
+
+        String URL_BASE = "http://124ed2a8.ngrok.io";
+        String URL = URL_BASE + "/user/like";
+
+        final RequestQueue requestQueue = Volley.newRequestQueue(MainActivity.this);
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Toast toast = Toast.makeText(MainActivity.this,"Added to Likes!",Toast.LENGTH_SHORT);
+                        View view = toast.getView();
+
+//Gets the actual oval background of the Toast then sets the colour filter
+                        view.setBackgroundColor(Color.rgb(255,255,224));
+
+                        toast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL,
+                                0, 1000);
+
+                        toast.show();
+
+                        Log.d("Response", response);
+                        overridePendingTransition(0,0);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(MainActivity.this,error.toString(),Toast.LENGTH_LONG).show();
+                        Log.d("Error:",error.toString());
+                    }
+                }){
+            @Override
+            protected Map<String,String> getParams(){
+                Map<String,String> params = new HashMap<String, String>();
+                //name,age,breed,type,gender,vaccination,description
+                Log.d("username", username);
+                Log.d("petID", String.valueOf(petID)) ;
+
+                params.put("email",username);
+                params.put("petid", String.valueOf(petID));
+
+                return params;
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+
+                SharedPreferences prefs = getSharedPreferences("myPrefs", MODE_PRIVATE);
+                String token = prefs.getString("token","error");
+                headers.put("Authorization", "bearer " +token);
+
+                return headers;
+            }
+
+        };
+
+        requestQueue.add(stringRequest);
+
+
+    }
+
+    }
 
 
 
 
-}
