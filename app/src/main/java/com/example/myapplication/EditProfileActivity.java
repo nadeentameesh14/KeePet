@@ -131,6 +131,7 @@ public class EditProfileActivity extends AppCompatActivity {
         startActivityForResult(intent,IMG_REQUEST);
     }
 
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -318,8 +319,6 @@ public class EditProfileActivity extends AppCompatActivity {
         };
 
         requestQueue.add(stringRequest);
-
-
     }
 
     public String imageToString(Bitmap bitmap) {
