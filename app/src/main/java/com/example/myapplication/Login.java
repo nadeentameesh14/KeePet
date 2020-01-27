@@ -3,6 +3,7 @@ package com.example.myapplication;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -66,9 +67,11 @@ public class Login extends AppCompatActivity {
                         @Override
                         public void onResponse(String s) {
                             if(s.equals("null")){
+
                                 Toast.makeText(Login.this, "user not found", Toast.LENGTH_LONG).show();
                             }
                             else{
+                                Log.d("response", s);
                                 try {
                                     JSONObject obj = new JSONObject(s);
 

@@ -11,6 +11,14 @@
             android:title="@string/messages"
             android:id="@+id/nav_messages"/>
         <item
+            android:icon="@drawable/settings"
+            android:title="Account"
+            android:id="@+id/nav_account"/>
+        <item
+            android:icon="@drawable/help"
+            android:title="Help"
+            android:id="@+id/nav_help"/>
+        <item
             android:icon="@drawable/logout"
             android:title="@string/logout"
             android:id="@+id/nav_logout"/>

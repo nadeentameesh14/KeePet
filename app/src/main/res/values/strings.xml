@@ -104,6 +104,7 @@
     <string name="close_drawer">close</string>
     <string name="edit_profile">Edit Profile</string>
     <string name="no_posts_to_show">No posts to show...</string>
+    <string name="editpost">EditPost</string>
 
 
 </resources>

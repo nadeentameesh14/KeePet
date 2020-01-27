@@ -187,7 +187,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void getAllNonAdoptedPetsRequest() {
 
-        String URL_BASE = "http://00559c5e.ngrok.io";
+        String URL_BASE = "Http://777d33b5.ngrok.io";
         String URL = URL_BASE + "/pet/get/nonadopted";
 
 
