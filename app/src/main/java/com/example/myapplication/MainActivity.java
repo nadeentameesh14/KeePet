@@ -275,8 +275,7 @@ public class MainActivity extends AppCompatActivity {
 
                                 String img_string = item.getString("image");
 
-                                Bitmap img = null ;
-//                                Bitmap img = stomap(img_string);
+                                Bitmap img = null;
                                 Log.i("Image:",img_string);
 
                                 Card card = new Card(id,item_breed,item_age,item_gender,item_username,img,img);
