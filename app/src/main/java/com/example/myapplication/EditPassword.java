@@ -22,6 +22,8 @@ public class EditPassword extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.account);
 
+        Intent i = getIntent();
+
         oldpass = (EditText) findViewById(R.id.oldPass);
         newpass = (EditText) findViewById(R.id.newpass);
         confirmnewpass = (EditText) findViewById(R.id.confirmnewpass);

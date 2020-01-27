@@ -33,6 +33,7 @@ public class PetViewActivity extends AppCompatActivity {
 
     private TextView petInfo;
     private TextView petInfo2;
+    private TextView ownerInfo;
     private String Type;
     private String Breed;
     private String Gender;
@@ -42,6 +43,7 @@ public class PetViewActivity extends AppCompatActivity {
     private String Age;
     private String Vac;
     private String Desc;
+    private String Username;
     private Integer ID;
 
     private TextView Adoption;
@@ -59,6 +61,7 @@ public class PetViewActivity extends AppCompatActivity {
 
         petInfo=(TextView)findViewById(R.id.petInfo) ;
         petInfo2=(TextView)findViewById(R.id.petInfo2) ;
+        ownerInfo=(TextView)findViewById(R.id.ownerInfo);
 
         Intent intent = getIntent();
 
@@ -128,7 +131,7 @@ public class PetViewActivity extends AppCompatActivity {
 
     public void getPetRequest() {
 
-        String URL_BASE = "http://d3bc1802.ngrok.io";
+        String URL_BASE = "http://124ed2a8.ngrok.io";
         String URL = URL_BASE + "/pet/get/byId?id=" + ID;
 
         final RequestQueue requestQueue = Volley.newRequestQueue(PetViewActivity.this);
@@ -155,6 +158,7 @@ public class PetViewActivity extends AppCompatActivity {
                                 Age = item.getString("age");
                                 City = item.getString("city");
                                 Area = item.getString("area");
+                                Username = item.getString("seller");
 
                                 if(item.getInt("vaccination") == 0) Vac = "No";
                                 else Vac = "Yes";
@@ -179,6 +183,10 @@ public class PetViewActivity extends AppCompatActivity {
                                          + "\nDescription: " + Desc;
 
                                 petInfo2.setText(pet_i2);
+
+                                ownerInfo.setText("Owner's username: " + Username);
+
+
 
                             } catch (JSONException e) {
                                 Log.e("Exception", "unexpected JSON exception in request 1", e);
