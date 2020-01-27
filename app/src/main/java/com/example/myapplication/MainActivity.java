@@ -27,6 +27,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -50,7 +51,8 @@ public class MainActivity extends AppCompatActivity {
 
     private Card cards[];
     private CustomAdapter arrayAdapter;
-    SwipeFlingAdapterView flingContainer;
+    private SwipeFlingAdapterView flingContainer;
+    private ImageButton filterButton;
 
     private ListView listView;
     private List<Card> list;
@@ -74,7 +76,15 @@ public class MainActivity extends AppCompatActivity {
         list = new ArrayList<Card>();
 
         flingContainer = (SwipeFlingAdapterView) findViewById(R.id.frame);
+        filterButton = (ImageButton)findViewById(R.id.filterButton);
 
+        filterButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(MainActivity.this,FilterActivity.class);
+                startActivity(i);
+            }
+        });
         //dummyData();
 
         getAllNonAdoptedPetsRequest();
@@ -137,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
 
                 Intent intent = new Intent(MainActivity.this, PetViewActivity.class);
 
-                intent.putExtra("ID", itemPosition);
+                intent.putExtra("ID", list.get(itemPosition).getID());
 
                 startActivity(intent);
 
@@ -185,7 +195,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void getAllNonAdoptedPetsRequest() {
 
-        String URL_BASE = "http://777d33b5.ngrok.io";
+        String URL_BASE = "http://d3bc1802.ngrok.io";
         String URL = URL_BASE + "/pet/get/nonadopted";
 
 

@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -23,12 +24,14 @@ import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.firebase.client.authentication.Constants;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.io.ByteArrayInputStream;
@@ -238,7 +241,7 @@ public class AddActivity extends AppCompatActivity {
 
     public void sendPostRequest() {
 
-        String URL_BASE = "http://777d33b5.ngrok.io";
+        String URL_BASE = "http://d3bc1802.ngrok.io";
         String URL= URL_BASE + "/pet/create";
 
         final RequestQueue requestQueue = Volley.newRequestQueue(AddActivity.this);
@@ -281,6 +284,17 @@ public class AddActivity extends AppCompatActivity {
                 params.put("description",description.getText().toString());
 
                 return params;
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+
+                SharedPreferences prefs = getSharedPreferences("myPrefs", MODE_PRIVATE);
+                String token = prefs.getString("token","error");
+                headers.put("Authorization", "bearer " +token);
+
+                return headers;
             }
 
         };

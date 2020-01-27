@@ -126,63 +126,45 @@ public class Login extends AppCompatActivity {
 
     public void loginPostRequest() {
 
-        String URL_BASE = "http://777d33b5.ngrok.io";
+        String URL_BASE = "http://d3bc1802.ngrok.io";
         String URL= URL_BASE + "/auth/login";
+
+        Log.i("Here", "in");
 
         final RequestQueue requestQueue = Volley.newRequestQueue(Login.this);
 
-        JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.POST, URL,null,
-                new Response.Listener<JSONObject>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL,
+                new Response.Listener<String>() {
                     @Override
-                    public void onResponse(JSONObject response) {
-                        System.out.println(response);
+                    public void onResponse(String response) {
+                        Toast.makeText(Login.this,"Posted Successfully! ",Toast.LENGTH_LONG).show();
+                        Log.d("Response", response);
 
+                        SharedPreferences.Editor editor = getSharedPreferences("myPrefs", MODE_PRIVATE).edit();
+                        editor.putString("token", response);
+                        editor.apply();
 
-                        SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
-                        SharedPreferences.Editor editor = pref.edit();
-
-                        try {
-                            editor.putString("token", response.getString("token"));
-                            Log.i("Here", response.getString("token"));
-                            editor.apply();
-
-                        } catch (JSONException e) {
-                            Log.i("EROROROROR", "erororoororor ");
-                            e.printStackTrace();
-                        }
-
-
-
+                        overridePendingTransition(0,0);
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-
+                        Toast.makeText(Login.this,error.toString(),Toast.LENGTH_LONG).show();
+                        Log.d("Error:",error.toString());
                     }
-                })
-
-        {
-
+                }){
             @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-
-                HashMap<String, String> headers = new HashMap<String, String>();
-                headers.put("TOKEN", "99KI9Gj68CgCf70deM22Ka64chef2C40Gm2lFJ2J0G9JkDaaDAcbFfd19MfacGf3FFm8CM1hG0eDiIk8");
-
-                return headers;
-            }
-
-            @Override
-            protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<String, String>();
+            protected Map<String,String> getParams(){
+                Map<String,String> params = new HashMap<String, String>();
+                //name,age,breed,type,gender,vaccination,description
                 params.put("email",user);
                 params.put("password", pass);
 
                 return params;
             }
-        };
 
-        requestQueue.add(jsObjRequest);
+        };
+        requestQueue.add(stringRequest);
     }
 }

@@ -28,6 +28,9 @@ public class Card {
         return age;
     }
 
+    public int getID() {
+        return postID;
+    }
     public String getGender() {
         return gender;
     }

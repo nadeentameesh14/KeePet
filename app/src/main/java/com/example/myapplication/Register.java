@@ -139,7 +139,7 @@ public class Register extends AppCompatActivity {
 
     public void registerPostRequest() {
 
-        String URL_BASE = "http://777d33b5.ngrok.io";
+        String URL_BASE = "http://d3bc1802.ngrok.io";
         String URL= URL_BASE + "/auth/register";
 
         final RequestQueue requestQueue = Volley.newRequestQueue(Register.this);

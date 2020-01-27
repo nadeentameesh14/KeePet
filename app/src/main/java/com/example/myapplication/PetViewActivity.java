@@ -11,11 +11,13 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -23,6 +25,9 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class PetViewActivity extends AppCompatActivity {
 
@@ -58,7 +63,7 @@ public class PetViewActivity extends AppCompatActivity {
         Intent intent = getIntent();
 
         ID = intent.getIntExtra("ID",0);
-        Log.i("ID",String.valueOf(ID));
+        Log.i("ID HERE",String.valueOf(ID));
 
         imageView = (ImageView)findViewById(R.id.image);
         messageButton = (FloatingActionButton)findViewById(R.id.fab) ;
@@ -123,7 +128,7 @@ public class PetViewActivity extends AppCompatActivity {
 
     public void getPetRequest() {
 
-        String URL_BASE = "http://777d33b5.ngrok.io";
+        String URL_BASE = "http://d3bc1802.ngrok.io";
         String URL = URL_BASE + "/pet/get/byId?id=" + ID;
 
         final RequestQueue requestQueue = Volley.newRequestQueue(PetViewActivity.this);
@@ -193,4 +198,6 @@ public class PetViewActivity extends AppCompatActivity {
         requestQueue.add(stringRequest);
 
     }
+
+
 }
