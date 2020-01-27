@@ -76,9 +76,11 @@ public class Login extends AppCompatActivity {
                         @Override
                         public void onResponse(String s) {
                             if(s.equals("null")){
+
                                 Toast.makeText(Login.this, "user not found", Toast.LENGTH_LONG).show();
                             }
                             else{
+                                Log.d("response", s);
                                 try {
                                     JSONObject obj = new JSONObject(s);
 

@@ -134,14 +134,23 @@ public class UserActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.nav_messages: {
                 Toast.makeText(UserActivity.this, "Messages", Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(getApplicationContext(),MessagingActivity.class);
+                Intent intent = new Intent(getApplicationContext(),Users.class);
                 startActivity(intent);
                 }
                 break;
+            case R.id.nav_account: {
+                Toast.makeText(UserActivity.this, "Account", Toast.LENGTH_LONG).show();
+            }
+            break;
+            case R.id.nav_help: {
+                Toast.makeText(UserActivity.this, "Help", Toast.LENGTH_LONG).show();
+            }
+            break;
             case R.id.nav_logout: {
                 Toast.makeText(UserActivity.this, "Log Out", Toast.LENGTH_LONG).show();
                 }
                 break;
+
         }
         return false;
     }

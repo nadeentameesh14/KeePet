@@ -79,7 +79,7 @@ public class PetViewActivity extends AppCompatActivity {
         messageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent messageIntent = new Intent(PetViewActivity.this, MessagingActivity.class);
+                Intent messageIntent = new Intent(PetViewActivity.this, Chat.class);
 
                 startActivity(messageIntent);
             }
