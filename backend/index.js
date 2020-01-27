@@ -131,10 +131,15 @@ app.post("/auth/login",  function (req, res) {
 });
 
 
+// upload.single('image') , 
+// DIR + "/" + req.file.originalname
 
 
-  app.post("/user/update", CheckAuth  , function (req, res) {
-     
+  app.post("/user/update", CheckAuth  , upload.single('image') , function (req, res) {
+    
+    console.log( req.file ) ;
+    console.log(req.image) ;
+    
     let sql = "UPDATE user SET email = '" + req.body.email  + "' , bio = '" + req.body.bio + "'" + ", name = '" + req.body.name + "'"  ;
     sql = sql + " WHERE email = '" + req.body.email + "'";
   
@@ -162,7 +167,7 @@ app.post("/user/like",  CheckAuth  ,  function (req, res) {
     return res.sendStatus(400);
 
     let sql = "INSERT INTO likes (email , petid ) VALUES (" ;
-    sql = sql + "'" + req.body.email + "'," + req.body.petid + "'"  +")";
+    sql = sql + "'" + req.body.email + "','" + req.body.petid + "')";
     let query = db.query(sql, function (err, result) {
         if (err) {
         console.log(err);
