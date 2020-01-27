@@ -470,7 +470,7 @@ public class MainActivity extends AppCompatActivity {
             }
             break;
             case 2: {
-                options = getResources().getStringArray(R.array.all_breeds);
+               // options = getResources().getStringArray(R.array.all_breeds);
             }
             break;
             case 3: {
