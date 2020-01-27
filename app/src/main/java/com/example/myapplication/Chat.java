@@ -116,7 +116,7 @@ public class Chat extends AppCompatActivity {
             textView.setWidth(100);
             textView.setHeight(100);
             textView.setTextSize(25);
-            textView.setTextScaleX(2);
+            
         }
         else{
             lp2.gravity = Gravity.RIGHT;
@@ -124,7 +124,7 @@ public class Chat extends AppCompatActivity {
             textView.setWidth(100);
             textView.setHeight(100);
             textView.setTextSize(25);
-            textView.setTextScaleX(2);
+
         }
         textView.setLayoutParams(lp2);
         layout.addView(textView);
