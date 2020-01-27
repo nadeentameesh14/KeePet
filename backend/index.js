@@ -16,6 +16,8 @@ const jwt = require('jsonwebtoken');
 const CheckAuth = require('./middleware/check-auth') ;
 
 
+const base64ToImage = require('base64-to-image');
+
 
 const storage = multer.diskStorage({
   destination: function (req, file, callback) {
@@ -133,13 +135,19 @@ app.post("/auth/login",  function (req, res) {
 
 // upload.single('image') , 
 // DIR + "/" + req.file.originalname
+// , upload.single('image')
 
-
-  app.post("/user/update", CheckAuth  , upload.single('image') , function (req, res) {
+  app.post("/user/update", CheckAuth   , function (req, res) {
     
     console.log( req.file ) ;
-    console.log(req.image) ;
-    
+    console.log(req.body.image) ;
+
+    var base64Str =  req.body.image ;
+    var path = "./uploads" ;
+    var optionalObj = {'fileName': 'myfilename', 'type':'png'};
+    var imageInfo = base64ToImage(base64Str,path,optionalObj); 
+    console.log(imageInfo);
+
     let sql = "UPDATE user SET email = '" + req.body.email  + "' , bio = '" + req.body.bio + "'" + ", name = '" + req.body.name + "'"  ;
     sql = sql + " WHERE email = '" + req.body.email + "'";
   
@@ -150,10 +158,11 @@ app.post("/auth/login",  function (req, res) {
           throw err;
         }
         else{
+          // res.send( req.body.image );
           res.send(result);
           console.log("update info for user : " + req.body.email )
-          console.log(req.body);
         };
+
     });
 
 });
