@@ -273,7 +273,9 @@ public class AddActivity extends AppCompatActivity {
                 params.put("breed",breedSpin.getSelectedItem().toString());
                 params.put("city",citySpin.getSelectedItem().toString());
                 params.put("area",areaSpin.getSelectedItem().toString());
-                //params.put("image",imageToString(bitmap));
+                Bitmap scaledBitmap = getScaledBitmap(bitmap, 200, 200);
+                params.put("image",imageToString(scaledBitmap));
+                Log.i("BASE64",imageToString(scaledBitmap));
 
 
                 if(genderSpin.getSelectedItem().toString().equals("Male")) params.put("gender",String.valueOf('m'));
@@ -361,9 +363,45 @@ public class AddActivity extends AppCompatActivity {
     }
 
     public String imageToString(Bitmap bitmap) {
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
-        byte[] byteArray = byteArrayOutputStream .toByteArray();
-        return Base64.encodeToString(byteArray, Base64.DEFAULT);
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+
+        byte[] imageBytes = baos.toByteArray();
+
+        String base64String = Base64.encodeToString(imageBytes, Base64.NO_WRAP);
+
+        return base64String;
+    }
+
+    private Bitmap getScaledBitmap(Bitmap b, int reqWidth, int reqHeight)
+    {
+        int bWidth = b.getWidth();
+        int bHeight = b.getHeight();
+
+        int nWidth = bWidth;
+        int nHeight = bHeight;
+
+        if(nWidth > reqWidth)
+        {
+            int ratio = bWidth / reqWidth;
+            if(ratio > 0)
+            {
+                nWidth = reqWidth;
+                nHeight = bHeight / ratio;
+            }
+        }
+
+        if(nHeight > reqHeight)
+        {
+            int ratio = bHeight / reqHeight;
+            if(ratio > 0)
+            {
+                nHeight = reqHeight;
+                nWidth = bWidth / ratio;
+            }
+        }
+
+        return Bitmap.createScaledBitmap(b, nWidth, nHeight, true);
     }
 }

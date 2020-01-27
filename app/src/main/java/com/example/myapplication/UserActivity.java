@@ -37,6 +37,8 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class UserActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
     DrawerLayout drawerLayout;
@@ -46,6 +48,7 @@ public class UserActivity extends AppCompatActivity implements NavigationView.On
     GridView gridView;
     ImageButton editProfile;
     ImageView imageView;
+    CircleImageView profileImage;
 
     TextView Name;
     TextView Username;
@@ -63,6 +66,7 @@ public class UserActivity extends AppCompatActivity implements NavigationView.On
         Name = (TextView)findViewById(R.id.Name);
         Username = (TextView)findViewById(R.id.username);
         Bio = (TextView)findViewById(R.id.bio);
+        profileImage = (CircleImageView)findViewById(R.id.profile_image);
 
         getUserRequest();
 

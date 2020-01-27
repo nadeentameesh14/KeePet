@@ -4,7 +4,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,20 +14,34 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class LikesActivity extends AppCompatActivity {
 
     GridView gridView;
     ImageView imageView;
-    int [] images = {R.drawable.pupper,R.drawable.kitty,R.drawable.doggo2,R.drawable.kitty2,R.drawable.doggo3,R.drawable.kitty3,R.drawable.doggo4,
-            R.drawable.kitty4,R.drawable.paws,R.drawable.paws};
+    int [] images = {R.drawable.paws,R.drawable.paws,R.drawable.paws,R.drawable.paws,R.drawable.paws};
+    int noOfLikes;
+    int [] IDS = {-1,-1,-1,-1,-1};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_likes);
+
+        getLikesRequest();
 
         gridView = findViewById(R.id.likesgridview);
 
@@ -39,7 +55,7 @@ public class LikesActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), PetViewActivity.class);
 
                 intent.putExtra("Image", images[position]);
-                intent.putExtra("ID", 2);
+                intent.putExtra("ID", IDS[position]);
                 startActivity(intent);
 
             }
@@ -112,5 +128,55 @@ public class LikesActivity extends AppCompatActivity {
             return v;
 
         }
+    }
+
+    public void getLikesRequest() {
+
+        String URL_BASE = "http://124ed2a8.ngrok.io";
+        String URL = URL_BASE + "/pet/get/nonadopted";
+
+
+        final RequestQueue requestQueue = Volley.newRequestQueue(LikesActivity.this);
+
+
+        JsonArrayRequest stringRequest = new JsonArrayRequest(
+                Request.Method.GET,
+                URL,
+                null,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+
+                        noOfLikes = response.length();
+                        Log.i("lIKES", String.valueOf(noOfLikes));
+
+                        for (int i = 0; i < response.length(); i++) {
+                            try {
+                                JSONObject item = response.getJSONObject(i);
+
+                                IDS[i] = item.getInt("id");
+
+                                //arrayAdapter.notifyDataSetChanged();
+
+
+                            } catch (JSONException e) {
+                                Log.e("Exception", "unexpected JSON exception in request 1", e);
+                            }
+                        }
+
+                    }
+
+
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("RESPONSE IS :", error.toString());
+                    }
+                }
+        );
+
+        requestQueue.add(stringRequest);
+
     }
 }
