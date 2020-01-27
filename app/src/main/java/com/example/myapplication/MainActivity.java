@@ -267,6 +267,7 @@ public class MainActivity extends AppCompatActivity {
                                 Bitmap img = null;//stomap(img_string);
                                 Log.i("Image:", img_string);
 
+
                                 Card card = new Card(id, item_breed, item_age, item_gender, item_username, img, img);
 
                                 list.add(card);
@@ -470,7 +471,7 @@ public class MainActivity extends AppCompatActivity {
             }
             break;
             case 2: {
-                options = getResources().getStringArray(R.array.all_breeds);
+               // options = getResources().getStringArray(R.array.all_breeds);
             }
             break;
             case 3: {

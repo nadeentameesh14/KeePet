@@ -139,17 +139,16 @@ app.post("/auth/login",  function (req, res) {
 
   app.post("/user/update", CheckAuth   , function (req, res) {
     
-    console.log( req.file ) ;
-    console.log(req.body.image) ;
 
     var base64Str =  req.body.image ;
-    var path = "./uploads" ;
-    var optionalObj = {'fileName': 'myfilename', 'type':'png'};
+    var base64Str = "data:image/png;base64," + base64Str ;
+    var path = "uploads" ;
+    var optionalObj = {'fileName':  new Date().toISOString().replace(/:/g, '-') + 'myfilename' , 'type':'png'};
     var imageInfo = base64ToImage(base64Str,path,optionalObj); 
     console.log(imageInfo);
 
     let sql = "UPDATE user SET email = '" + req.body.email  + "' , bio = '" + req.body.bio + "'" + ", name = '" + req.body.name + "'"  ;
-    sql = sql + " WHERE email = '" + req.body.email + "'";
+    sql = sql + " WHERE email = '" + path + "'";
   
     let query = db.query(sql, function (err, result) {
         if (err) {

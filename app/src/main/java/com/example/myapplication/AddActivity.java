@@ -273,7 +273,8 @@ public class AddActivity extends AppCompatActivity {
                 params.put("breed",breedSpin.getSelectedItem().toString());
                 params.put("city",citySpin.getSelectedItem().toString());
                 params.put("area",areaSpin.getSelectedItem().toString());
-                params.put("image",imageToString(bitmap));
+                //params.put("image",imageToString(bitmap));
+
 
                 if(genderSpin.getSelectedItem().toString().equals("Male")) params.put("gender",String.valueOf('m'));
                 else params.put("gender",String.valueOf('f'));
