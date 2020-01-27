@@ -86,11 +86,11 @@ public class PetViewActivity extends AppCompatActivity {
 
                 username = getPetOwner(ID);
 
-                Log.d("owner", username);
+                //Log.d("owner", username);
 
-                //UserDetails.chatWith = username;
+                UserDetails.chatWith = username;
 
-               // startActivity(messageIntent);
+               startActivity(messageIntent);
             }
         });
 
@@ -227,7 +227,7 @@ public class PetViewActivity extends AppCompatActivity {
                             JSONObject obj = response.getJSONObject(0);
                             user = obj.getString("seller");
 
-                           // Log.d("owner", user);
+                           // Log.d("resp", user);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -287,6 +287,7 @@ public class PetViewActivity extends AppCompatActivity {
         // Add the request to the RequestQueue.
         requestQueue.add(stringRequest);
 
+        //Log.d("owner", user);
         return user;
     }
 

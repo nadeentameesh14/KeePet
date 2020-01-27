@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageButton filterButton;
 
     private List<Card> list;
-    private String [] filter_options;
+    private String[] filter_options;
 
     private TextView noPosts;
     private int filterType; //0 no filter, 1 type, 2 breed, 3 city, 4 area
@@ -78,12 +78,12 @@ public class MainActivity extends AppCompatActivity {
     String area_filtered;
 
 
-    int [] images = {R.drawable.doggo2,R.drawable.kitty2,R.drawable.doggo3,R.drawable.kitty3,R.drawable.doggo4,
-            R.drawable.kitty4,R.drawable.paws,R.drawable.paws,R.drawable.pupper,R.drawable.kitty,R.drawable.doggo2,R.drawable.kitty2,R.drawable.doggo3,R.drawable.kitty3,R.drawable.doggo4,
-            R.drawable.kitty4,R.drawable.paws,R.drawable.paws,R.drawable.pupper,R.drawable.kitty,R.drawable.doggo2,R.drawable.kitty2,R.drawable.doggo3,R.drawable.kitty3,R.drawable.doggo4,
-            R.drawable.kitty4,R.drawable.paws,R.drawable.paws,R.drawable.pupper,R.drawable.kitty,R.drawable.doggo2,R.drawable.kitty2,R.drawable.doggo3,R.drawable.kitty3,R.drawable.doggo4,
-            R.drawable.kitty4,R.drawable.paws,R.drawable.paws,R.drawable.pupper,R.drawable.kitty,R.drawable.doggo2,R.drawable.kitty2,R.drawable.doggo3,R.drawable.kitty3,R.drawable.doggo4,
-            R.drawable.kitty4,R.drawable.paws,R.drawable.paws,R.drawable.pupper,R.drawable.kitty};
+    int[] images = {R.drawable.doggo2, R.drawable.kitty2, R.drawable.doggo3, R.drawable.kitty3, R.drawable.doggo4,
+            R.drawable.kitty4, R.drawable.paws, R.drawable.paws, R.drawable.pupper, R.drawable.kitty, R.drawable.doggo2, R.drawable.kitty2, R.drawable.doggo3, R.drawable.kitty3, R.drawable.doggo4,
+            R.drawable.kitty4, R.drawable.paws, R.drawable.paws, R.drawable.pupper, R.drawable.kitty, R.drawable.doggo2, R.drawable.kitty2, R.drawable.doggo3, R.drawable.kitty3, R.drawable.doggo4,
+            R.drawable.kitty4, R.drawable.paws, R.drawable.paws, R.drawable.pupper, R.drawable.kitty, R.drawable.doggo2, R.drawable.kitty2, R.drawable.doggo3, R.drawable.kitty3, R.drawable.doggo4,
+            R.drawable.kitty4, R.drawable.paws, R.drawable.paws, R.drawable.pupper, R.drawable.kitty, R.drawable.doggo2, R.drawable.kitty2, R.drawable.doggo3, R.drawable.kitty3, R.drawable.doggo4,
+            R.drawable.kitty4, R.drawable.paws, R.drawable.paws, R.drawable.pupper, R.drawable.kitty};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,25 +95,20 @@ public class MainActivity extends AppCompatActivity {
         list = new ArrayList<Card>();
 
         flingContainer = (SwipeFlingAdapterView) findViewById(R.id.frame);
-        filterButton = (ImageButton)findViewById(R.id.filterButton);
+        filterButton = (ImageButton) findViewById(R.id.filterButton);
         //dummyData();
 
-        if(filterType == 0) {
+        if (filterType == 0) {
+            getAllNonAdoptedPetsRequest();
+        } else if (filterType == 1) {
+            getAllNonAdoptedPetsRequest();
+        } else if (filterType == 2) {
+            getAllNonAdoptedPetsRequest();
+        } else if (filterType == 3) {
+            getAllNonAdoptedPetsRequest();
+        } else if (filterType == 4) {
             getAllNonAdoptedPetsRequest();
         }
-        else if (filterType == 1) {
-            getAllNonAdoptedPetsRequest();
-        }
-        else if (filterType == 2) {
-            getAllNonAdoptedPetsRequest();
-        }
-        else if (filterType == 3) {
-            getAllNonAdoptedPetsRequest();
-        }
-        else if (filterType == 4) {
-            getAllNonAdoptedPetsRequest();
-        }
-
 
 
         flingContainer.setFlingListener(new SwipeFlingAdapterView.onFlingListener() {
@@ -140,9 +135,9 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
 
-            public void onRightCardExit( Object dataObject) {       //right swipe with pet post
+            public void onRightCardExit(Object dataObject) {       //right swipe with pet post
 
-               // Toast.makeText(MainActivity.this, "Added to Likes!", Toast.LENGTH_SHORT).show();
+                // Toast.makeText(MainActivity.this, "Added to Likes!", Toast.LENGTH_SHORT).show();
 
                 Intent intent = getIntent();
 
@@ -151,17 +146,14 @@ public class MainActivity extends AppCompatActivity {
                 int ID = list.get(0).getID();
 
 
-
                 addToLikes(user, ID);
 
             }
 
 
-
             @Override
 
             public void onAdapterAboutToEmpty(int itemsInAdapter) {
-
 
 
             }
@@ -194,8 +186,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
 
 
-
-
             }
 
         });
@@ -206,7 +196,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void bottomNav() {
 
-        BottomNavigationView bottomNavigationView = (BottomNavigationView)findViewById(R.id.bottom_navigation);
+        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
 
         bottomNavigationView.setSelectedItemId(R.id.nav_home);
 
@@ -216,13 +206,13 @@ public class MainActivity extends AppCompatActivity {
 
                 switch (item.getItemId()) {
                     case R.id.nav_add: {
-                        startActivity(new Intent(getApplicationContext(),AddActivity.class));
-                        overridePendingTransition(0,0);
+                        startActivity(new Intent(getApplicationContext(), AddActivity.class));
+                        overridePendingTransition(0, 0);
                         return true;
                     }
                     case R.id.nav_settings: {
                         startActivity(new Intent(getApplicationContext(), UserActivity.class));
-                        overridePendingTransition(0,0);
+                        overridePendingTransition(0, 0);
                         return true;
                     }
                     case R.id.nav_home: {
@@ -239,7 +229,6 @@ public class MainActivity extends AppCompatActivity {
 
         String URL_BASE = "http://124ed2a8.ngrok.io";
         String URL = URL_BASE + "/pet/get/nonadopted";
-
 
 
         final RequestQueue requestQueue = Volley.newRequestQueue(MainActivity.this);
@@ -261,12 +250,12 @@ public class MainActivity extends AppCompatActivity {
                                 int id = item.getInt("id");
                                 String item_breed = item.getString("breed");
 
-                                Log.i( "ID: " ,  String.valueOf(id));
+                                Log.i("ID: ", String.valueOf(id));
 
 
                                 String item_gender;
 
-                                if(item.getString("gender").equals("m")) item_gender = "Male";
+                                if (item.getString("gender").equals("m")) item_gender = "Male";
                                 else item_gender = "Female";
 
                                 int item_age = getAge(item.getString("age"));
@@ -276,9 +265,9 @@ public class MainActivity extends AppCompatActivity {
                                 String img_string = item.getString("image");
 
                                 Bitmap img = null;//stomap(img_string);
-                                Log.i("Image:",img_string);
+                                Log.i("Image:", img_string);
 
-                                Card card = new Card(id,item_breed,item_age,item_gender,item_username,img,img);
+                                Card card = new Card(id, item_breed, item_age, item_gender, item_username, img, img);
 
                                 list.add(card);
                                 //arrayAdapter.notifyDataSetChanged();
@@ -289,12 +278,12 @@ public class MainActivity extends AppCompatActivity {
                             }
                         }
 
-                        arrayAdapter = new CustomAdapter( getApplicationContext(), R.layout.swipecard, list );
+                        arrayAdapter = new CustomAdapter(getApplicationContext(), R.layout.swipecard, list);
                         flingContainer.setAdapter(arrayAdapter);
                         arrayAdapter.notifyDataSetChanged();
-                        Log.i( " THE SIZE OF THE LIST IS FINALYYYYYY: " ,  String.valueOf(list.size()));
-                        if(list.size() < 1) {
-                            noPosts = (TextView)findViewById(R.id.noposts);
+                        Log.i(" THE SIZE OF THE LIST IS FINALYYYYYY: ", String.valueOf(list.size()));
+                        if (list.size() < 1) {
+                            noPosts = (TextView) findViewById(R.id.noposts);
                             noPosts.setVisibility(View.VISIBLE);
 
                         }
@@ -318,7 +307,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private int getAge(String dobString){
+    private int getAge(String dobString) {
 
         Date date = null;
         SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-DD");
@@ -328,7 +317,7 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        if(date == null) return 0;
+        if (date == null) return 0;
 
         Calendar dob = Calendar.getInstance();
         Calendar today = Calendar.getInstance();
@@ -339,27 +328,26 @@ public class MainActivity extends AppCompatActivity {
         int month = dob.get(Calendar.MONTH);
         int day = dob.get(Calendar.DAY_OF_MONTH);
 
-        dob.set(year, month+1, day);
+        dob.set(year, month + 1, day);
 
         int age = today.get(Calendar.YEAR) - dob.get(Calendar.YEAR);
 
-        if (today.get(Calendar.DAY_OF_YEAR) < dob.get(Calendar.DAY_OF_YEAR)){
+        if (today.get(Calendar.DAY_OF_YEAR) < dob.get(Calendar.DAY_OF_YEAR)) {
             age--;
         }
-
 
 
         return age;
     }
 
-    public Bitmap stomap(String encodedString){
+    public Bitmap stomap(String encodedString) {
 
         byte[] imageAsBytes = Base64.decode(encodedString.getBytes(), Base64.DEFAULT);
         return BitmapFactory.decodeByteArray(imageAsBytes, 0, imageAsBytes.length);
     }
 
 
-    public void addToLikes(final String username, final int petID){
+    public void addToLikes(final String username, final int petID) {
 
         String URL_BASE = "http://124ed2a8.ngrok.io";
         String URL = URL_BASE + "/user/like";
@@ -370,11 +358,11 @@ public class MainActivity extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Toast toast = Toast.makeText(MainActivity.this,"Added to Likes!",Toast.LENGTH_SHORT);
+                        Toast toast = Toast.makeText(MainActivity.this, "Added to Likes!", Toast.LENGTH_SHORT);
                         View view = toast.getView();
 
 //Gets the actual oval background of the Toast then sets the colour filter
-                        view.setBackgroundColor(Color.rgb(255,255,224));
+                        view.setBackgroundColor(Color.rgb(255, 255, 224));
 
                         toast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL,
                                 0, 1000);
@@ -382,24 +370,24 @@ public class MainActivity extends AppCompatActivity {
                         toast.show();
 
                         Log.d("Response", response);
-                        overridePendingTransition(0,0);
+                        overridePendingTransition(0, 0);
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(MainActivity.this,error.toString(),Toast.LENGTH_LONG).show();
-                        Log.d("Error:",error.toString());
+                        Toast.makeText(MainActivity.this, error.toString(), Toast.LENGTH_LONG).show();
+                        Log.d("Error:", error.toString());
                     }
-                }){
+                }) {
             @Override
-            protected Map<String,String> getParams(){
-                Map<String,String> params = new HashMap<String, String>();
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
                 //name,age,breed,type,gender,vaccination,description
                 Log.d("username", username);
-                Log.d("petID", String.valueOf(petID)) ;
+                Log.d("petID", String.valueOf(petID));
 
-                params.put("email",username);
+                params.put("email", username);
                 params.put("petid", String.valueOf(petID));
 
                 return params;
@@ -410,8 +398,8 @@ public class MainActivity extends AppCompatActivity {
                 Map<String, String> headers = new HashMap<>();
 
                 SharedPreferences prefs = getSharedPreferences("myPrefs", MODE_PRIVATE);
-                String token = prefs.getString("token","error");
-                headers.put("Authorization", "bearer " +token);
+                String token = prefs.getString("token", "error");
+                headers.put("Authorization", "bearer " + token);
 
                 return headers;
             }
@@ -432,36 +420,36 @@ public class MainActivity extends AppCompatActivity {
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.filter_type: {
-                        Toast.makeText( MainActivity.this, "Type", Toast.LENGTH_LONG).show();
+                        Toast.makeText(MainActivity.this, "Type", Toast.LENGTH_LONG).show();
                         filterType = 1;
-                        Log.i("Filter Type",String.valueOf(filterType));
-                        getAndroidBuilder(filter_options,"Filter by type",1);
+                        Log.i("Filter Type", String.valueOf(filterType));
+                        getAndroidBuilder(filter_options, "Filter by type", 1);
                         return true;
                     }
                     case R.id.filter_breed: {
-                        Toast.makeText( MainActivity.this, "Breed", Toast.LENGTH_LONG).show();
+                        Toast.makeText(MainActivity.this, "Breed", Toast.LENGTH_LONG).show();
                         filterType = 2;
-                        Log.i("Filter Type",String.valueOf(filterType));
-                        getAndroidBuilder(filter_options,"Filter by breed",2);
+                        Log.i("Filter Type", String.valueOf(filterType));
+                        getAndroidBuilder(filter_options, "Filter by breed", 2);
                         return true;
                     }
                     case R.id.filter_city: {
-                        Toast.makeText( MainActivity.this, "City", Toast.LENGTH_LONG).show();
+                        Toast.makeText(MainActivity.this, "City", Toast.LENGTH_LONG).show();
                         filterType = 3;
-                        Log.i("Filter Type",String.valueOf(filterType));
-                        getAndroidBuilder(filter_options,"Filter by city",3);
+                        Log.i("Filter Type", String.valueOf(filterType));
+                        getAndroidBuilder(filter_options, "Filter by city", 3);
                         return true;
                     }
                     case R.id.filter_area: {
-                        Toast.makeText( MainActivity.this, "Area", Toast.LENGTH_LONG).show();
+                        Toast.makeText(MainActivity.this, "Area", Toast.LENGTH_LONG).show();
                         filterType = 4;
-                        Log.i("Filter Type",String.valueOf(filterType));
-                        getAndroidBuilder(filter_options,"Filter by area",4);
+                        Log.i("Filter Type", String.valueOf(filterType));
+                        getAndroidBuilder(filter_options, "Filter by area", 4);
                         return true;
                     }
                     case R.id.no_filter: {
                         filterType = 0;
-                        Log.i("Filter Type",String.valueOf(filterType));
+                        Log.i("Filter Type", String.valueOf(filterType));
                         return true;
                     }
 
@@ -474,7 +462,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void getAndroidBuilder (String[] options, String title, final int type) {
+    public void getAndroidBuilder(String[] options, String title, final int type) {
 
         switch (type) {
             case 1: {
@@ -544,5 +532,5 @@ public class MainActivity extends AppCompatActivity {
         dialog.show();
 
 
-
     }
+}
