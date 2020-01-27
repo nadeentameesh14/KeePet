@@ -5,7 +5,9 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,8 +21,21 @@ import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class UserActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
@@ -31,6 +46,11 @@ public class UserActivity extends AppCompatActivity implements NavigationView.On
     GridView gridView;
     ImageButton editProfile;
     ImageView imageView;
+
+    TextView Name;
+    TextView Username;
+    TextView Bio;
+
     int [] images = {R.drawable.pupper,R.drawable.kitty,R.drawable.doggo2,R.drawable.kitty2,R.drawable.doggo3,R.drawable.kitty3,R.drawable.doggo4,
             R.drawable.kitty4,R.drawable.paws,R.drawable.paws};
 
@@ -39,6 +59,12 @@ public class UserActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user);
+
+        Name = (TextView)findViewById(R.id.Name);
+        Username = (TextView)findViewById(R.id.username);
+        Bio = (TextView)findViewById(R.id.bio);
+
+        getUserRequest();
 
         drawerLayout = findViewById(R.id.drawer);
         toolbar = findViewById(R.id.toolbar);
@@ -185,5 +211,87 @@ public class UserActivity extends AppCompatActivity implements NavigationView.On
             return v;
 
         }
+    }
+
+    public void getUserRequest() {
+
+        String URL_BASE = "http://d3bc1802.ngrok.io";
+        String URL = URL_BASE + "/getuser";
+
+        final RequestQueue requestQueue = Volley.newRequestQueue(UserActivity.this);
+
+        JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.POST,URL,null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        System.out.println(response);
+
+                        try {
+
+                            Log.i("Response", response.toString());
+
+                            String name = "";
+                            String username = "";
+                            String bio = "";
+
+                            if(response.getString("name") != null) {
+                                name = response.getString("name");
+                            }
+                            if(response.getString("email") != null) {
+                                username = response.getString("email");
+                            }
+                            if(response.getString("bio") != null) {
+                                bio = response.getString("bio");
+                            }
+
+
+                            Log.i("Name", name);
+                            Log.i("Username", username);
+                            Log.i("bio", bio);
+
+                            Name.setText(name);
+                            Username.setText(username);
+                            Bio.setText(bio);
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                })
+
+        {
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+
+                Map<String, String> headers = new HashMap<>();
+
+                SharedPreferences prefs = getSharedPreferences("myPrefs", MODE_PRIVATE);
+                String token = prefs.getString("token","error");
+                headers.put("Authorization", "bearer " +token);
+
+                return headers;
+            }
+
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+
+                return params;
+            }
+        };
+
+        // Add the request to the RequestQueue.
+        requestQueue.add(jsObjRequest);
+
     }
 }

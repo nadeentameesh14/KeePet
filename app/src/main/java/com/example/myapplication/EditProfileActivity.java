@@ -219,7 +219,7 @@ public class EditProfileActivity extends AppCompatActivity {
                             Log.i("Username", username);
                             Log.i("bio", bio);
 
-                            UsernameEdit.setHint(username);
+                            UsernameEdit.setText(username);
 
 
 
