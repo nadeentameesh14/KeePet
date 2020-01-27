@@ -187,7 +187,7 @@ public class EditProfileActivity extends AppCompatActivity {
 
     public void getUserRequest() {
 
-        String URL_BASE = "http://d3bc1802.ngrok.io";
+        String URL_BASE = "http://124ed2a8.ngrok.io";
         String URL = URL_BASE + "/getuser";
 
         final RequestQueue requestQueue = Volley.newRequestQueue(EditProfileActivity.this);
@@ -269,7 +269,7 @@ public class EditProfileActivity extends AppCompatActivity {
 
     public void updatePostRequest() {
 
-        String URL_BASE = "http://d3bc1802.ngrok.io";
+        String URL_BASE = "http://124ed2a8.ngrok.io";
         String URL= URL_BASE + "/user/update";
 
         final RequestQueue requestQueue = Volley.newRequestQueue(EditProfileActivity.this);
@@ -326,6 +326,8 @@ public class EditProfileActivity extends AppCompatActivity {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
         byte[] byteArray = byteArrayOutputStream .toByteArray();
-        return Base64.encodeToString(byteArray, Base64.DEFAULT);
+        String final_string = Base64.encodeToString(byteArray, Base64.DEFAULT);
+        Log.i("Image",final_string);
+        return final_string;
     }
 }

@@ -166,6 +166,8 @@ public class UserActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.nav_account: {
                 Toast.makeText(UserActivity.this, "Account", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(getApplicationContext(),EditPassword.class);
+                startActivity(intent);
             }
             break;
             case R.id.nav_help: {
@@ -174,7 +176,14 @@ public class UserActivity extends AppCompatActivity implements NavigationView.On
             break;
             case R.id.nav_logout: {
                 Toast.makeText(UserActivity.this, "Log Out", Toast.LENGTH_LONG).show();
-                }
+                SharedPreferences prefs = getSharedPreferences("myPrefs", MODE_PRIVATE);
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.clear();
+                editor.apply();
+                Intent intent = new Intent(getApplicationContext(),Login.class);
+                startActivity(intent);
+
+            }
                 break;
 
         }
@@ -215,7 +224,7 @@ public class UserActivity extends AppCompatActivity implements NavigationView.On
 
     public void getUserRequest() {
 
-        String URL_BASE = "http://d3bc1802.ngrok.io";
+        String URL_BASE = "http://124ed2a8.ngrok.io";
         String URL = URL_BASE + "/getuser";
 
         final RequestQueue requestQueue = Volley.newRequestQueue(UserActivity.this);
