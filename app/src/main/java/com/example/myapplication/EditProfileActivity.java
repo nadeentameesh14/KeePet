@@ -220,7 +220,8 @@ public class EditProfileActivity extends AppCompatActivity {
                             Log.i("bio", bio);
 
                             UsernameEdit.setText(username);
-
+                            NameEdit.setText(name);
+                            BioEdit.setText(bio);
 
 
                         } catch (JSONException e) {

@@ -1,6 +1,7 @@
 package com.example.myapplication;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -30,6 +31,7 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.PopupMenu;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -54,8 +56,8 @@ public class MainActivity extends AppCompatActivity {
     private SwipeFlingAdapterView flingContainer;
     private ImageButton filterButton;
 
-    private ListView listView;
     private List<Card> list;
+    private String [] filter_options;
 
     private TextView noPosts;
 
@@ -77,14 +79,6 @@ public class MainActivity extends AppCompatActivity {
 
         flingContainer = (SwipeFlingAdapterView) findViewById(R.id.frame);
         filterButton = (ImageButton)findViewById(R.id.filterButton);
-
-        filterButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(MainActivity.this,FilterActivity.class);
-                startActivity(i);
-            }
-        });
         //dummyData();
 
         getAllNonAdoptedPetsRequest();
@@ -126,6 +120,7 @@ public class MainActivity extends AppCompatActivity {
 
 
             }
+
             @Override
 
             public void onScroll(float scrollProgressPercent) {
@@ -147,7 +142,9 @@ public class MainActivity extends AppCompatActivity {
 
                 Intent intent = new Intent(MainActivity.this, PetViewActivity.class);
 
+                Log.i("Item Position", String.valueOf(itemPosition));
                 intent.putExtra("ID", list.get(itemPosition).getID());
+
 
                 startActivity(intent);
 
@@ -314,6 +311,41 @@ public class MainActivity extends AppCompatActivity {
 
         byte[] imageAsBytes = Base64.decode(encodedString.getBytes(), Base64.DEFAULT);
         return BitmapFactory.decodeByteArray(imageAsBytes, 0, imageAsBytes.length);
+    }
+
+    public void showPopup(View view) {
+        PopupMenu popupMenu = new PopupMenu(this, view);
+        popupMenu.inflate(R.menu.popup_filters);
+        popupMenu.show();
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.filter_type: {
+                        Toast.makeText( MainActivity.this, "Type", Toast.LENGTH_LONG).show();
+                        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+
+                        return true;
+                    }
+                    case R.id.filter_breed: {
+                        Toast.makeText( MainActivity.this, "Breed", Toast.LENGTH_LONG).show();
+                        return true;
+                    }
+                    case R.id.filter_city: {
+                        Toast.makeText( MainActivity.this, "City", Toast.LENGTH_LONG).show();
+                        return true;
+                    }
+                    case R.id.filter_area: {
+                        Toast.makeText( MainActivity.this, "Area", Toast.LENGTH_LONG).show();
+                        return true;
+                    }
+
+                }
+
+                return false;
+            }
+        });
+
     }
 
 
