@@ -15,18 +15,18 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".EditProfileActivity"></activity>
+        <activity android:name=".FilterActivity"></activity>
+        <activity android:name=".EditProfileActivity" />
         <activity android:name=".Register" />
         <activity android:name=".Users" />
         <activity android:name=".Chat" />
         <activity android:name=".LikesActivity" />
         <activity android:name=".PetViewActivity" />
         <activity android:name=".UserActivity" />
-        <activity android:name=".MessagingActivity"/>
+        <activity android:name=".MessagingActivity" />
         <activity android:name=".AddActivity" />
-        <activity android:name=".MainActivity"/>
+        <activity android:name=".MainActivity" />
         <activity android:name=".Login">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

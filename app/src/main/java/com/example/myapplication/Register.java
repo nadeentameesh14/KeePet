@@ -3,6 +3,7 @@ package com.example.myapplication;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,10 +23,13 @@ import org.json.JSONObject;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Register extends AppCompatActivity {
-    EditText username, password;
+    EditText username, password, confirmpassword;
     Button registerButton;
-    String user, pass;
+    String user, pass, confirmpass;
     TextView login;
 
     @Override
@@ -35,6 +39,8 @@ public class Register extends AppCompatActivity {
 
         username = (EditText)findViewById(R.id.username);
         password = (EditText)findViewById(R.id.password);
+        confirmpassword = (EditText)findViewById(R.id.confirmpassword);
+
         registerButton = (Button)findViewById(R.id.registerButton);
         login = (TextView)findViewById(R.id.login);
 
@@ -52,6 +58,9 @@ public class Register extends AppCompatActivity {
             public void onClick(View v) {
                 user = username.getText().toString();
                 pass = password.getText().toString();
+                confirmpass = confirmpassword.getText().toString();
+
+                registerPostRequest();
 
                 if(user.equals("")){
                     username.setError("can't be blank");
@@ -67,6 +76,9 @@ public class Register extends AppCompatActivity {
                 }
                 else if(pass.length()<5){
                     password.setError("at least 5 characters long");
+                }
+                else if(!pass.equals(confirmpass)) {
+                    password.setError("passwords don't match");
                 }
                 else {
                     final ProgressDialog pd = new ProgressDialog(Register.this);
@@ -91,6 +103,7 @@ public class Register extends AppCompatActivity {
                                     if (!obj.has(user)) {
                                         reference.child(user).child("password").setValue(pass);
                                         Toast.makeText(Register.this, "registration successful", Toast.LENGTH_LONG).show();
+
                                     } else {
                                         Toast.makeText(Register.this, "username already exists", Toast.LENGTH_LONG).show();
                                     }
@@ -113,8 +126,54 @@ public class Register extends AppCompatActivity {
 
                     RequestQueue rQueue = Volley.newRequestQueue(Register.this);
                     rQueue.add(request);
+
+                    startActivity(new Intent(Register.this, Login.class));
                 }
+
+
+
+
             }
         });
+    }
+
+    public void registerPostRequest() {
+
+        String URL_BASE = "http://d3bc1802.ngrok.io";
+        String URL= URL_BASE + "/auth/register";
+
+        final RequestQueue requestQueue = Volley.newRequestQueue(Register.this);
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Toast.makeText(Register.this,"Posted Successfully! ",Toast.LENGTH_LONG).show();
+                        Log.d("Response", response);
+                        overridePendingTransition(0,0);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(Register.this,error.toString(),Toast.LENGTH_LONG).show();
+                        Log.d("Error:",error.toString());
+                    }
+                }){
+            @Override
+            protected Map<String,String> getParams(){
+                Map<String,String> params = new HashMap<String, String>();
+                //name,age,breed,type,gender,vaccination,description
+                params.put("email",user);
+                params.put("password", pass);
+
+                return params;
+            }
+
+        };
+
+        requestQueue.add(stringRequest);
+
+
     }
 }

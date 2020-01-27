@@ -5,19 +5,35 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -31,7 +47,7 @@ public class EditProfileActivity extends AppCompatActivity {
     private ImageButton resetButton;
     private ImageButton saveButton;
     private ImageButton discardButton;
-
+    private SharedPreferences prefs;
     private final int IMG_REQUEST= 2;
     private Bitmap bitmap;
 
@@ -41,11 +57,26 @@ public class EditProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
 
+
+        SharedPreferences prefs = getSharedPreferences("myPrefs", MODE_PRIVATE);
+        String token = prefs.getString("token","error");
+
+        Log.i("Key",token);
+
         initialize();
 
         handleUpload();
 
+        getUserRequest();
+
         bottomNav();
+
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                updatePostRequest();
+            }
+        });
 
 
     }
@@ -58,6 +89,7 @@ public class EditProfileActivity extends AppCompatActivity {
         userProfile = (CircleImageView) findViewById(R.id.profile_image);
         uploadButton = (ImageButton)findViewById(R.id.uploadButton2);
         resetButton = (ImageButton)findViewById(R.id.resetButton2);
+        saveButton = (ImageButton)findViewById(R.id.saveButton);
 
 
     }
@@ -148,6 +180,141 @@ public class EditProfileActivity extends AppCompatActivity {
                 return false;
             }
         });
+
+    }
+
+    public void getUserRequest() {
+
+        String URL_BASE = "http://d3bc1802.ngrok.io";
+        String URL = URL_BASE + "/getuser";
+
+        final RequestQueue requestQueue = Volley.newRequestQueue(EditProfileActivity.this);
+
+        JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.POST,URL,null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        System.out.println(response);
+
+                        try {
+
+                            Log.i("Response", response.toString());
+
+                            String name = "";
+                            String username = "";
+                            String bio = "";
+
+                            if(response.getString("name") != null) {
+                                name = response.getString("name");
+                            }
+                            if(response.getString("email") != null) {
+                                username = response.getString("email");
+                            }
+                            if(response.getString("bio") != null) {
+                                bio = response.getString("bio");
+                            }
+
+
+                            Log.i("Name", name);
+                            Log.i("Username", username);
+                            Log.i("bio", bio);
+
+                            UsernameEdit.setText(username);
+
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                })
+
+        {
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+
+                Map<String, String> headers = new HashMap<>();
+
+                SharedPreferences prefs = getSharedPreferences("myPrefs", MODE_PRIVATE);
+                String token = prefs.getString("token","error");
+                headers.put("Authorization", "bearer " +token);
+
+                return headers;
+            }
+
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+
+                return params;
+            }
+        };
+
+        // Add the request to the RequestQueue.
+        requestQueue.add(jsObjRequest);
+
+    }
+
+    public void updatePostRequest() {
+
+        String URL_BASE = "http://d3bc1802.ngrok.io";
+        String URL= URL_BASE + "/user/update";
+
+        final RequestQueue requestQueue = Volley.newRequestQueue(EditProfileActivity.this);
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Toast.makeText(EditProfileActivity.this,"Updated Successfully! ",Toast.LENGTH_LONG).show();
+                        Log.d("Response", response);
+                        startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                        overridePendingTransition(0,0);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(EditProfileActivity.this,error.toString(),Toast.LENGTH_LONG).show();
+                        Log.d("Error:",error.toString());
+                    }
+                }){
+            @Override
+            protected Map<String,String> getParams(){
+                Map<String,String> params = new HashMap<String, String>();
+                //name,age,breed,type,gender,vaccination,description
+                params.put("name",NameEdit.getText().toString());
+                params.put("email",UsernameEdit.getText().toString());
+                params.put("bio",BioEdit.getText().toString());
+
+
+                return params;
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+
+                SharedPreferences prefs = getSharedPreferences("myPrefs", MODE_PRIVATE);
+                String token = prefs.getString("token","error");
+                headers.put("Authorization", "bearer " +token);
+
+                return headers;
+            }
+
+        };
+
+        requestQueue.add(stringRequest);
+
 
     }
 }

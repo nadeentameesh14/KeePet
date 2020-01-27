@@ -4,14 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
 
-    tools:context="com.example.myapplication.Register"
+
     android:orientation="vertical"
     android:gravity="center">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Register"
+        android:text="Account"
         android:textSize="30dp"
         android:gravity="center"
         android:layout_marginBottom="20dp"/>
@@ -19,44 +19,57 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/username"
+        android:id="@+id/oldPass"
         android:inputType="text"
         android:maxLines="1"
-        android:hint="enter username"
+        android:hint="Old password"
         android:layout_marginBottom="10dp"/>
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/password"
+        android:id="@+id/newpass"
         android:inputType="textPassword"
         android:maxLines="1"
-        android:hint="enter password"
+        android:hint="New password"
         android:layout_marginBottom="10dp"/>
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/confirmpassword"
+        android:id="@+id/confirmnewpass"
         android:inputType="textPassword"
         android:maxLines="1"
-        android:hint="confirm password"
+        android:hint="Confirm new password"
         android:layout_marginBottom="10dp"/>
 
-    <Button
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Register"
-        android:background="@color/colorPrimary"
-        android:id="@+id/registerButton"
-        android:layout_marginBottom="20dp"/>
+        android:layout_height="57dp"
+        android:orientation="horizontal">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Click here to login"
-        android:textSize="20dp"
-        android:gravity="center"
-        android:id="@+id/login"/>
+        <Button
+            android:id="@+id/saveButton"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:background="@color/colorPrimary"
+
+            android:text="Save" />
+
+        <Button
+            android:id="@+id/discardButton"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:background="@color/colorPrimary"
+            android:layout_marginLeft="10dp"
+
+
+
+            android:text="Discard" />
+
+    </LinearLayout>
+
 
 </LinearLayout>
