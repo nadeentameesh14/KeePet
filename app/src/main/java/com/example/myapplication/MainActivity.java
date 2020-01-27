@@ -323,6 +323,7 @@ public class MainActivity extends AppCompatActivity {
                 switch (item.getItemId()) {
                     case R.id.filter_type: {
                         Toast.makeText( MainActivity.this, "Type", Toast.LENGTH_LONG).show();
+
                         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
 
                         return true;
@@ -348,6 +349,10 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
+    public void getAndroidBuilder () {
+
+    }
 
 
 

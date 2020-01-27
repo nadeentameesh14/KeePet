@@ -11,6 +11,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Base64;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -31,6 +32,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -296,6 +298,7 @@ public class EditProfileActivity extends AppCompatActivity {
                 params.put("name",NameEdit.getText().toString());
                 params.put("email",UsernameEdit.getText().toString());
                 params.put("bio",BioEdit.getText().toString());
+                params.put("image",imageToString(bitmap));
 
 
                 return params;
@@ -317,5 +320,12 @@ public class EditProfileActivity extends AppCompatActivity {
         requestQueue.add(stringRequest);
 
 
+    }
+
+    public String imageToString(Bitmap bitmap) {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+        byte[] byteArray = byteArrayOutputStream .toByteArray();
+        return Base64.encodeToString(byteArray, Base64.DEFAULT);
     }
 }
